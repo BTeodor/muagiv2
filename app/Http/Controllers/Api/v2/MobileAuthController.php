@@ -151,25 +151,3 @@ class MobileAuthController extends Controller
         return $request->only($this->loginUsername(), 'password');
     }
 }
-st.
-     *
-     * @param  Request  $request
-     * @return array
-     */
-    protected function getCredentials(Request $request) {
-        // The form field for providing username or password
-        // have name of "username", however, in order to support
-        // logging users in with both (username and email)
-        // we have to check if user has entered one or another
-        $usernameOrEmail = $request->get($this->loginUsername());
-
-        if ($this->isEmail($usernameOrEmail)) {
-            return [
-                'email' => $usernameOrEmail,
-                'password' => $request->get('password'),
-            ];
-        }
-
-        return $request->only($this->loginUsername(), 'password');
-    }
-}
