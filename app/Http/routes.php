@@ -475,6 +475,11 @@ Route::group(['middleware' => 'web'], function(){
 			'as' => 'user.register',
 			'uses' => 'Api\v2\MobileAuthController@postRegister'
 		]);
+
+		Route::post('searchByProductName', [
+			'as' => 'product.search',
+			'uses' => 'Api\v2\ProductController@searchByProductName'
+		]);
 	});
 
 });

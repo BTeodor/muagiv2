@@ -16,4 +16,16 @@ class ProductController extends Controller
     	if(empty($product)) return reponse()->json(["description" => "<p>Not Available</p>"]);
     	else return reponse()->json(["description" => $product->description]);
     }
+
+    public function searchByProductName(Request $request){
+    	$keyword = "";
+    	if (isset($request->keyword)) {
+    		$keyword = $request->keyword;
+    	}
+    	return response()->json([
+    		'status' => true,
+    		'data' => Products::where('title', 'LIKE', '%'.$keyword.'%')->get()
+    	]);
+
+    }
 }
