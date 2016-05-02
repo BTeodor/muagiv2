@@ -129,6 +129,19 @@ class MobileAuthController extends Controller
     }
 
     /**
+     * Validate if provided parameter is valid email.
+     *
+     * @param $param
+     * @return bool
+     */
+    private function isEmail($param) {
+        return !Validator::make(
+            ['username' => $param],
+            ['username' => 'email']
+        )->fails();
+    }
+
+    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  Request  $request
