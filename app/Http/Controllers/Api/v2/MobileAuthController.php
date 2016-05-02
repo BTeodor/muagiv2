@@ -46,35 +46,39 @@ class MobileAuthController extends Controller
                 'data' => array('user' => $user)
             ]);
         }
-    	$credentials = array('email' => $request->email, 'password' => $request->password);
-    	if(!Auth::validate($credentials)){
-    		return response()->json([
+        $credentials = $this->getCredentials($request);
+
+        if(!Auth::validate($credentials)){
+            return response()->json([
                 'status' => false,
                 'data' => array('message' => 'Email hoặc mật khẩu không đúng')
             ]);
-    	}
-    	else {
-    		$user = Auth::getProvider()->retrieveByCredentials($credentials);
+        }
+        else {
+            
+            $user = Auth::getProvider()->retrieveByCredentials($credentials);
 
-			if ($user->isBanned()) return response()->json(['status' => false]);
+            if ($user->isBanned()) return response()->json(['status' => false,
+                'data' => array('message' => 'User is banned')
+            ]);
 
-    		Auth::login($user);
+            Auth::login($user);
 
-    		$this->users->update($user->id, ['last_login' => Carbon::now()]);
+            $this->users->update($user->id, ['last_login' => Carbon::now()]);
             event(new LoggedIn($user));
 
-    		return response()->json([
-    			'status' => true,
-    			'data' => array('user' => $user)
-    		]);
-    	}
+            return response()->json([
+                'status' => true,
+                'data' => array('user' => $user)
+            ]);
+        }
     }
 
     public function logout(){
         if(Auth::check()){
             $user = Auth::user();
             $request->session()->put('auth.2fa.id', $user->id);
-        	event(new LoggedOut(Auth::user()));
+            event(new LoggedOut(Auth::user()));
             Auth::logout();
             return response()->json([
                 'status' => true,
@@ -87,12 +91,12 @@ class MobileAuthController extends Controller
         ]);
     }
 
-	private function isEmail($param) {
-		return !Validator::make(
-			['username' => $param],
-			['username' => 'email']
-		)->fails();
-	}
+    private function isEmail($param) {
+        return !Validator::make(
+            ['username' => $param],
+            ['username' => 'email']
+        )->fails();
+    }
 
     public function postRegister(Request $request){
 
@@ -137,5 +141,37 @@ class MobileAuthController extends Controller
                 'user' => $user
             ]
         ]);
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function loginUsername() {
+        return 'email';
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request) {
+        // The form field for providing username or password
+        // have name of "username", however, in order to support
+        // logging users in with both (username and email)
+        // we have to check if user has entered one or another
+        $usernameOrEmail = $request->get($this->loginUsername());
+
+        if ($this->isEmail($usernameOrEmail)) {
+            return [
+                'email' => $usernameOrEmail,
+                'password' => $request->get('password'),
+            ];
+        }
+
+        return $request->only($this->loginUsername(), 'password');
     }
 }
