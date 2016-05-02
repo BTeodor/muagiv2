@@ -74,30 +74,6 @@ class MobileAuthController extends Controller
         }
     }
 
-    public function logout(){
-        if(Auth::check()){
-            $user = Auth::user();
-            $request->session()->put('auth.2fa.id', $user->id);
-            event(new LoggedOut(Auth::user()));
-            Auth::logout();
-            return response()->json([
-                'status' => true,
-                'data' => array('message' => 'Thoát đăng nhập thành công')
-            ]);
-        }
-        return response()->json([
-            'status' => false,
-            'data' => array('message' => 'Chưa đăng nhập')
-        ]);
-    }
-
-    private function isEmail($param) {
-        return !Validator::make(
-            ['username' => $param],
-            ['username' => 'email']
-        )->fails();
-    }
-
     public function postRegister(Request $request){
 
         $errors = array();
@@ -154,6 +130,28 @@ class MobileAuthController extends Controller
 
     /**
      * Get the needed authorization credentials from the request.
+     *
+     * @param  Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request) {
+        // The form field for providing username or password
+        // have name of "username", however, in order to support
+        // logging users in with both (username and email)
+        // we have to check if user has entered one or another
+        $usernameOrEmail = $request->get($this->loginUsername());
+
+        if ($this->isEmail($usernameOrEmail)) {
+            return [
+                'email' => $usernameOrEmail,
+                'password' => $request->get('password'),
+            ];
+        }
+
+        return $request->only($this->loginUsername(), 'password');
+    }
+}
+st.
      *
      * @param  Request  $request
      * @return array

@@ -471,19 +471,6 @@ Route::group(['middleware' => 'web'], function(){
 			'uses' => 'Api\v2\MobileAuthController@postLogin'
 		]);
 
-		Route::get('logout', [
-			'as' => 'user.logout',
-			'uses' => 'Api\v2\MobileAuthController@logout'
-		]);
-
-		// Route::get('login', function(){
-		// 	return view('frontend.test.login');
-		// });
-
-		// Route::get('register', function(){
-		// 	return view('frontend.test.register');
-		// });
-
 		Route::post('register', [
 			'as' => 'user.register',
 			'uses' => 'Api\v2\MobileAuthController@postRegister'
