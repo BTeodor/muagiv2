@@ -1,0 +1,24 @@
+{
+  "name": "EasyAdmin",
+  "description": "Admin & User Dashboard with Two-Factor Authentication for Laravel 5.2",
+  "main": "",
+  "authors": [
+    "DeeJaVu <ddejjavvu@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "http://laravelish.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.2",
+    "font-awesome": "^4.5.0",
+    "sweetalert": "^1.1.3",
+    "bootstrap-switch": "^3.3.2"
+  }
+}
