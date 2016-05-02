@@ -18,13 +18,23 @@ class ProductController extends Controller
     }
 
     public function searchByProductName(Request $request){
-    	$keyword = "";
     	if (isset($request->keyword)) {
     		$keyword = $request->keyword;
+    		$products = Products::where('title', 'LIKE', '%'.$keyword.'%')->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'available_time', 'start_date'));
+    		if (count($products) > 0) {
+    			return response()->json([
+    				'status' => 200,
+    				'data' => $products
+    			]);
+    		}
+    		return response()->json([
+    			'status' => 404,
+    			'data' => ['message' => 'Không tìm thấy sản phầm chứa từ khoá '.$keyword]
+    		]);
     	}
     	return response()->json([
-    		'status' => true,
-    		'data' => Products::where('title', 'LIKE', '%'.$keyword.'%')->get()
+    		'status' => 404,
+    		'data' => ['message' => 'The field keyword not found']
     	]);
 
     }
