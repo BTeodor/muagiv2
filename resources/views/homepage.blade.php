@@ -207,7 +207,7 @@
             <h4 ><strong> Anh Nguyen </strong></h4>
             <i>Android Developer</i>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+              
             </p>
             
           </div>
@@ -215,18 +215,18 @@
           <div class="col-lg-3 col-md-3 col-sm-3" data-scroll-reveal="enter from the bottom after 0.4s" >
             <img src="{{ asset('assets/img/gs.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong>Duong Nguyen </strong></h4>
-            <i>Designer</i>
+            <i>Web Developer</i>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+              
             </p>
             
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3" data-scroll-reveal="enter from the bottom after 0.2s" >
             <img src="{{ asset('assets/img/Duyle.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong>Duy Le</strong></h4>
-            <i>Designer</i>
+            <i>Web Developer</i>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+              
             </p>
             
           </div>
@@ -234,9 +234,9 @@
           <div class="col-lg-3 col-md-3 col-sm-3" data-scroll-reveal="enter from the bottom after 0.2s" >
             <img src="{{ asset('assets/img/datbui_400x400.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong>Dat Bui</strong></h4>
-            <i>Designer</i>
+            <i>Android Developer</i>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+              
             </p>
             
           </div>
