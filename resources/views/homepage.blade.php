@@ -43,13 +43,13 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li ><a href="#home">HOME</a></li>
-            <li><a href="#features">FEATURES</a></li>
+            <li ><a href="#home">Trang chủ</a></li>
+            <li><a href="#features">Tiện ích</a></li>
             
-            <li><a href="#developers">DEVELOPERS</a></li>
-            <li><a href="#pricing">PRICING</a></li>
-            <li><a href="#contact">CONTACT</a></li>
-            <li><a href="mailto:support@homeshopping.esy.es?Subject=Product%20Enquiry" target="_top"> <i class="fa fa-envelope-o"></i><span class="home-mail">e-mail: support@homeshopping.esy.es</span></a></li>
+            <li><a href="#developers">Developer</a></li>
+            <li><a href="#pricing">Đầu tư</a></li>
+            <li><a href="#contact">Liên hệ</a></li>
+            <li><a href="mailto:support@muagi.16mb.com?Subject=Product%20Enquiry" target="_top"> <i class="fa fa-envelope-o"></i><span class="home-mail">e-mail: support@muagi.16mb.com</span></a></li>
           </ul>
         </div>
         
@@ -70,10 +70,10 @@
               </h2>
               
               <p data-scroll-reveal="enter from the bottom after 0.5s">
-                This is demo website of Home Shopping Project
+                This is the landing page of Home Shopping Channel
               </p>
               <p data-scroll-reveal="enter from the bottom after 0.9s">
-                Guests temporarily cannot sign up and sign in
+                Guests please download and use our application for the best experience
               </p>
               <br />
             </div>
@@ -92,7 +92,7 @@
             
             <h3 data-scroll-reveal="enter from the bottom after 0.1s">
             <strong>
-            Awesome Features
+            Tiện ích tuyệt vời
             </strong>
             </h3>
             
@@ -108,10 +108,8 @@
               </div>
               <div class="media-body">
                 <h4 class="media-heading"><strong> Real time home shopping channel </strong></h4>
-                <p>
-                  Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-                  Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-                </p>
+                <p>Kênh mua sắm tại nhà cập nhật 24/24</p>
+              <p>Thông tin về hàng hoá luôn được cập nhật tức thì</p>
               </div>
             </div>
           </div>
@@ -123,8 +121,7 @@
               <div class="media-body">
                 <h4 class="media-heading"><strong> Notifications push </strong></h4>
                 <p>
-                  Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-                  Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+                Thông báo cho khách hàng khi có chương trình shop bán hàng lên sóng
                 </p>
               </div>
             </div>
@@ -137,8 +134,7 @@
             <i class=" fa fa-database fa-5x "></i>
             <h4 ><strong> Price compare </strong></h4>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+            So sáng gía cả các mặt hàng, gíup khách hàng dễ dàng ra quyết định
             </p>
           </div>
           
@@ -146,16 +142,14 @@
             <i class=" fa fa-send fa-5x "></i>
             <h4 ><strong> Fast delivery </strong></h4>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+            Giao hàng nhanh chóng
             </p>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 1.4s" >
             <i class=" fa fa-puzzle-piece fa-5x "></i>
-            <h4 ><strong> Cooperations between shopping channels </strong></h4>
+            <h4 ><strong> Cooperations with shopping channels </strong></h4>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+            Luôn luôn sẵn sàng hợp tác nếu shop của bạn có nhu cầu
             </p>
           </div>
         </div>
@@ -172,7 +166,7 @@
               
               <h3 data-scroll-reveal="enter from the bottom after 0.1s">
               <strong>
-              What Our Clients Says
+              Khách hàng chúng tôi nói gì
               </strong>
               </h3>
               
@@ -180,7 +174,7 @@
               <i class="fa fa-quote-left "></i> This is the best shopping service I've ever used
               <i class="fa fa-quote-right "></i>
               <br />
-              <span class="pull-right"><strong>Someone</strong></span>
+              <span class="pull-right"><strong>Customer</strong></span>
               </h4>
             </div>
             
@@ -198,7 +192,7 @@
             
             <h3 data-scroll-reveal="enter from the bottom after 0.1s">
             <strong>
-            Our Developers
+            Các developer của chúng tôi
             </strong>
             </h3>
           </div>
@@ -211,7 +205,7 @@
             
             <img src="{{ asset('assets/img/anhnguyen.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong> Anh Nguyen </strong></h4>
-            <i>Designer</i>
+            <i>Android Developer</i>
             <p>
               Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
             </p>
@@ -219,7 +213,7 @@
           </div>
           
           <div class="col-lg-3 col-md-3 col-sm-3" data-scroll-reveal="enter from the bottom after 0.4s" >
-            <img src="{{ asset('assets/img/gsduong.jpg')}}" class="img-circle img-responsive" alt=""  />
+            <img src="{{ asset('assets/img/gs.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong>Duong Nguyen </strong></h4>
             <i>Designer</i>
             <p>
@@ -238,7 +232,7 @@
           </div>
 
           <div class="col-lg-3 col-md-3 col-sm-3" data-scroll-reveal="enter from the bottom after 0.2s" >
-            <img src="{{ asset('assets/img/gsduong.jpg')}}" class="img-circle img-responsive" alt=""  />
+            <img src="{{ asset('assets/img/datbui_400x400.jpg')}}" class="img-circle img-responsive" alt=""  />
             <h4 ><strong>Dat Bui</strong></h4>
             <i>Designer</i>
             <p>
@@ -253,12 +247,12 @@
     <!--DEVELOPERS SECTION END-->
     <section class="price-sec text-center "  id="pricing">
       <div class="col-lg-6  col-md-6 col-sm-6 single-price" data-scroll-reveal="enter from the left after 0.2s">
-        <span >199 <i class="fa fa-dollar"></i></span>
-        <h1>SINGLE LICENSE</h1>
+        <span >1 <i class="fa fa-dollar"></i></span>
+        <h1>START-UP INVESTMENT</h1>
       </div>
       <div class="col-lg-6  col-md-6 col-sm-6 multi-price" data-scroll-reveal="enter from the right after 0.2s">
-        <span >890 <i class="fa fa-dollar"></i></span>
-        <h1>MULTIPLE LICENSE</h1>
+        <span >1000 <i class="fa fa-dollar"></i></span>
+        <h1>FUTURE PROFIT</h1>
       </div>
     </section>
     <!--PRICING SECTION END-->
@@ -270,7 +264,7 @@
             
             <h3 data-scroll-reveal="enter from the bottom after 0.1s">
             <strong>
-            Stay Connected
+            Hợp tác với chúng tôi
             </strong>
             </h3>
             
@@ -288,16 +282,16 @@
               <br />
               1<sup>st</sup> Dai Co Viet road, Hai Ba Trung Dist, Hanoi, Vietnam
               <br />
-              <a href="mailto:support@homeshopping.esy.es?Subject=Product%20Enquiry" target="_top"> <i class="fa fa-envelope-o"></i><span class="home-mail">e-mail: support@homeshopping.esy.es</span></a>
+              <a href="mailto:support@muagi.16mb.com?Subject=Product%20Enquiry" target="_top"> <i class="fa fa-envelope-o"></i><span class="home-mail">e-mail: support@muagi.16mb.com</span></a>
             </p>
             
             
             
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6" data-scroll-reveal="enter from the left after 0.4s">
-            <strong>Just Small Text</strong>
+            <strong>OUR PARTNERS</strong>
             <p>
-              Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc.
+              Thanks for your collaborations!
             </p>
             
             
