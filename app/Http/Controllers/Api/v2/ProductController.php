@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Products;
+use App\ExternalClasses\MyClock;
 
 class ProductController extends Controller
 {
@@ -19,8 +20,10 @@ class ProductController extends Controller
 
     public function searchByProductName(Request $request){
     	if (isset($request->keyword)) {
+            $clock = new MyClock();
+            $today = $clock->get_today_date_GMT_7("Y-m-d");
     		$keyword = $request->keyword;
-    		$products = Products::where('title', 'LIKE', '%'.$keyword.'%')->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'available_time', 'start_date'));
+    		$products = Products::where('start_date', $today)->where('title', 'LIKE', '%'.$keyword.'%')->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'available_time', 'start_date'));
     		if (count($products) > 0) {
     			return response()->json([
     				'status' => 200,
