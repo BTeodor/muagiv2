@@ -489,3 +489,11 @@ Route::get('crawler', function(){
 	$crawler = $client->request('GET', 'http://www.scj.vn');
 	echo $crawler->filterXPath('//title/text()')->text();
 });
+
+Route::group(['middleware' => 'web'], function(){
+	Route::group(['prefix' => 'auth'], function(){
+		Route::get('login', 'WebUser\UserController@getLogin');
+
+		Route::get('register', 'WebUser\UserController@getRegister');
+	});
+});
