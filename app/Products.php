@@ -19,4 +19,7 @@ class Products extends Model
     	return $this->belongsTo('App\Channels', 'channel_id');
     }
 
+    public function userLiked(){
+    	return $this->belongsToMany('App\User', 'favorite', 'product_id', 'user_id')->withTimestamps()->withPivot('user_id');
+    }
 }

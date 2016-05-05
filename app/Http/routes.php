@@ -480,6 +480,21 @@ Route::group(['middleware' => 'web'], function(){
 			'as' => 'product.search',
 			'uses' => 'Api\v2\ProductController@searchByProductName'
 		]);
+
+		Route::post('favorite', [
+			'as' => 'favorite.post',
+			'uses' => 'Api\v2\FavoriteController@post'
+		]);
+
+		Route::post('favorite/delete', [
+			'as' => 'favorite.delete',
+			'uses' => 'Api\v2\FavoriteController@delete'
+		]);
+
+		Route::get('favorite', [
+			'as' => 'favorite.index',
+			'uses' => 'Api\v2\FavoriteController@index'
+		]);
 	});
 
 });
