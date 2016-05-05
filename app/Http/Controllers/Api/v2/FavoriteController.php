@@ -18,12 +18,21 @@ class FavoriteController extends Controller
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
-
-    	if(!\Auth::check()) {
+    	if(!\Auth::check()) { //not logged in
             return response()->json([
                 'status' => false,
                 'data' => [
-                    'msg' => 'Don\'t have permisson'
+                    'message' => 'Don\'t have permisson'
+                ]
+            ], 403);
+        }
+
+        $user = \Auth::user(); //logged in
+        if($user->id != $request->user_id){
+            return response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Don\'t have permisson'
                 ]
             ], 403);
         }
@@ -36,7 +45,6 @@ class FavoriteController extends Controller
                 ]
             ], 404);
 
-    	$user = App\User::find($request->user_id);
     	try{
     		$user->favorite()->attach($request->product_id);
     	} catch(\Illuminate\Database\QueryException $e){
@@ -62,11 +70,21 @@ class FavoriteController extends Controller
     		]);
     	}
 
-    	if(!\Auth::check()) {
+    	if(!\Auth::check()) { //not logged in
             return response()->json([
                 'status' => false,
                 'data' => [
-                    'msg' => 'Don\'t have permisson'
+                    'message' => 'Don\'t have permisson'
+                ]
+            ], 403);
+        }
+
+        $user = \Auth::user(); //logged in
+        if($user->id != $request->user_id){
+            return response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Don\'t have permisson'
                 ]
             ], 403);
         }
@@ -78,8 +96,6 @@ class FavoriteController extends Controller
                     'message' => 'Product not found'
                 ]
             ], 404);
-        
-	    $user = App\User::find($request->user_id);
 
     	try{
     		$user->favorite()->detach($request->product_id);
