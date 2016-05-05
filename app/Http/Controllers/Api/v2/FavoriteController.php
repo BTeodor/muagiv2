@@ -119,7 +119,7 @@ class FavoriteController extends Controller
             return response()->json([
                 'status' => false,
                 'data' => [
-                    'msg' => 'Don\'t have permisson'
+                    'message' => 'Don\'t have permisson'
                 ]
             ], 403);
         }
