@@ -481,8 +481,8 @@ Route::group(['middleware' => 'web'], function(){
 			'uses' => 'Api\v2\ProductController@searchByProductName'
 		]);
 
-		Route::post('favorite', [
-			'as' => 'favorite.post',
+		Route::post('favorite/create', [
+			'as' => 'favorite.create',
 			'uses' => 'Api\v2\FavoriteController@post'
 		]);
 
@@ -491,8 +491,8 @@ Route::group(['middleware' => 'web'], function(){
 			'uses' => 'Api\v2\FavoriteController@delete'
 		]);
 
-		Route::get('favorite', [
-			'as' => 'favorite.index',
+		Route::post('favorite/list', [
+			'as' => 'favorite.list',
 			'uses' => 'Api\v2\FavoriteController@index'
 		]);
 	});

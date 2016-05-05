@@ -18,25 +18,25 @@ class FavoriteController extends Controller
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
-    	if(!\Auth::check()) { //not logged in
-            return response()->json([
-                'status' => false,
-                'data' => [
-                    'message' => 'Don\'t have permisson'
-                ]
-            ], 403);
-        }
+    	// if(!\Auth::check()) { //not logged in
+     //        return response()->json([
+     //            'status' => false,
+     //            'data' => [
+     //                'message' => 'Don\'t have permisson'
+     //            ]
+     //        ], 403);
+     //    }
 
-        $user = \Auth::user(); //logged in
-        if($user->id != $request->user_id){
-            return response()->json([
-                'status' => false,
-                'data' => [
-                    'message' => 'Don\'t have permisson'
-                ]
-            ], 403);
-        }
-
+     //    $user = \Auth::user(); //logged in
+     //    if($user->id != $request->user_id){
+     //        return response()->json([
+     //            'status' => false,
+     //            'data' => [
+     //                'message' => 'Don\'t have permisson'
+     //            ]
+     //        ], 403);
+     //    }
+        $user = App\User::find($request->user_id);
         if(!App\Products::find($request->product_id)) 
             return response()->json([
                 'status' => false,
@@ -70,24 +70,25 @@ class FavoriteController extends Controller
     		]);
     	}
 
-    	if(!\Auth::check()) { //not logged in
-            return response()->json([
-                'status' => false,
-                'data' => [
-                    'message' => 'Don\'t have permisson'
-                ]
-            ], 403);
-        }
+    	// if(!\Auth::check()) { //not logged in
+     //        return response()->json([
+     //            'status' => false,
+     //            'data' => [
+     //                'message' => 'Don\'t have permisson'
+     //            ]
+     //        ], 403);
+     //    }
 
-        $user = \Auth::user(); //logged in
-        if($user->id != $request->user_id){
-            return response()->json([
-                'status' => false,
-                'data' => [
-                    'message' => 'Don\'t have permisson'
-                ]
-            ], 403);
-        }
+     //    $user = \Auth::user(); //logged in
+     //    if($user->id != $request->user_id){
+     //        return response()->json([
+     //            'status' => false,
+     //            'data' => [
+     //                'message' => 'Don\'t have permisson'
+     //            ]
+     //        ], 403);
+     //    }
+        $user = App\User::find($request->user_id);
 
         if(!App\Products::find($request->product_id)) 
             return response()->json([
@@ -114,16 +115,24 @@ class FavoriteController extends Controller
     	]);
     }
 
-    public function index(){
-    	if(!\Auth::check()) {
-            return response()->json([
+    public function index(Request $request){
+    	// if(!\Auth::check()) {
+     //        return response()->json([
+     //            'status' => false,
+     //            'data' => [
+     //                'message' => 'Don\'t have permisson'
+     //            ]
+     //        ], 403);
+     //    }
+     //    $user = \Auth::user();
+        if (!isset($request->user_id)) {
+            return Response::json([
                 'status' => false,
-                'data' => [
-                    'message' => 'Don\'t have permisson'
-                ]
-            ], 403);
+                'data' => ['message' => 'Not found any user_id or product_id']
+            ]);
         }
-        $user = \Auth::user();
+
+        $user = App\User::find($request->user_id);
 
         if(count($user->favorite()->get()) == 0) 
 	        return response()->json([
