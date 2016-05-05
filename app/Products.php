@@ -22,4 +22,8 @@ class Products extends Model
     public function userLiked(){
     	return $this->belongsToMany('App\User', 'favorite', 'product_id', 'user_id')->withTimestamps()->withPivot('user_id');
     }
+
+    public function userWatched(){
+        return $this->belongsToMany('App\User', 'watch_recent', 'product_id', 'user_id')->withTimestamps()->withPivot('user_id');
+    }
 }

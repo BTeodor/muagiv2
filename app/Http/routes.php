@@ -495,6 +495,21 @@ Route::group(['middleware' => 'web'], function(){
 			'as' => 'favorite.list',
 			'uses' => 'Api\v2\FavoriteController@index'
 		]);
+
+		Route::post('recent/create', [
+			'as' => 'recent.create',
+			'uses' => 'Api\v2\RecentController@post'
+		]);
+
+		Route::post('recent/delete', [
+			'as' => 'recent.delete',
+			'uses' => 'Api\v2\RecentController@delete'
+		]);
+
+		Route::post('recent/list', [
+			'as' => 'recent.list',
+			'uses' => 'Api\v2\RecentController@index'
+		]);
 	});
 
 });

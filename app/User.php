@@ -97,4 +97,8 @@ TwoFactorAuthenticatableContract {
 	public function favorite(){
 		return $this->belongsToMany('App\Products', 'favorite', 'user_id', 'product_id')->withTimestamps()->withPivot('product_id');
 	}
+
+	public function watch_recent(){
+		return $this->belongsToMany('App\Products', 'watch_recent', 'user_id', 'product_id')->withTimestamps()->withPivot('product_id');
+	}
 }
