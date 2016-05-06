@@ -11,6 +11,9 @@ class ChannelController extends Controller
 {
     //
 	public function index(){
-		
+		$edit = true;
+		$user = \Auth::user();
+		$channel = $user->channel()->get();
+		return view('dashboard.channel.channel', compact('edit', 'user', 'channel'));
 	}
 }

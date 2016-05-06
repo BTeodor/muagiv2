@@ -97,4 +97,8 @@ TwoFactorAuthenticatableContract {
 	public function role(){
 		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id')->withPivot('role_id');
 	}
+
+	public function channel(){
+		return $this->hasOne('App\Channels');
+	}
 }

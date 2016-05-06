@@ -16,51 +16,13 @@
 
 <div class="row">
     <div class="col-lg-3 col-xs-6">
-        <a href="{{ route('profile') }}" class="panel-link">
+        <a href="{{ route('channel.index') }}" class="panel-link">
             <div class="panel panel-default dashboard-panel">
                 <div class="panel-body">
                     <div class="icon">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-television"></i>
                     </div>
-                    <p class="lead">@lang('app.update_profile')</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    @if (config('session.driver') == 'database')
-        <div class="col-lg-3 col-xs-6">
-            <a href="{{ route('profile.sessions') }}" class="panel-link">
-                <div class="panel panel-default dashboard-panel">
-                    <div class="panel-body">
-                        <div class="icon">
-                            <i class="fa fa-list"></i>
-                        </div>
-                        <p class="lead">@lang('app.my_sessions')</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    @endif
-    <div class="col-lg-3 col-xs-6">
-        <a href="{{ route('profile.activity') }}" class="panel-link">
-            <div class="panel panel-default dashboard-panel">
-                <div class="panel-body">
-                    <div class="icon">
-                        <i class="fa fa-list-alt"></i>
-                    </div>
-                    <p class="lead">@lang('app.activity_log')</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-lg-3 col-xs-6">
-        <a href="{{ route('auth.logout') }}" class="panel-link">
-            <div class="panel panel-default dashboard-panel">
-                <div class="panel-body">
-                    <div class="icon">
-                        <i class="fa fa-sign-out"></i>
-                    </div>
-                    <p class="lead">@lang('app.logout')</p>
+                    <p class="lead">Your Shopping Channel</p>
                 </div>
             </div>
         </a>

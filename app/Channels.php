@@ -22,4 +22,8 @@ class Channels extends Model
     public function getAllProducts(){
     	return $this->hasMany('App\AllProduct', 'channel_id');
     }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

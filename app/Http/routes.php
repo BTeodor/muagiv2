@@ -61,7 +61,7 @@ Route::group(['middleware' => 'web'], function () {
 			]);
 
 			Route::group(['prefix' => 'channel'], function(){
-				Route::get('index', 'Dashboard\ChannelCotroller@index');
+				Route::get('index', ['as' => 'channel.index', 'uses' => 'ChannelController@index']);
 			});
 
 			Route::get('profile', [
