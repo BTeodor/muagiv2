@@ -53,7 +53,7 @@
                         </div>
                     @endif
                 </div>
-
+                @if (isset($socialLogins))
                 @if ($edit && count($socialLogins))
                     @foreach ($socialLogins->chunk(3) as $socialLoginsSet)
                         <br>
@@ -67,6 +67,7 @@
                             @endforeach
                         </div>
                     @endforeach
+                @endif
                 @endif
             </div>
         </div><!-- /.modal-content -->

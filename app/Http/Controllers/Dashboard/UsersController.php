@@ -127,13 +127,13 @@ class UsersController extends Controller {
 	public function edit(User $user, CountryRepository $countryRepository, RoleRepository $roleRepository) {
 		$edit = true;
 		$countries = $countryRepository->lists();
-		$socials = $user->socialNetworks;
+		// $socials = $user->socialNetworks;
 		$roles = $roleRepository->lists();
 		$statuses = UserStatus::lists();
-		$socialLogins = $this->users->getUserSocialLogins($user->id);
+		// $socialLogins = $this->users->getUserSocialLogins($user->id);
 
 		return view('dashboard.user.edit',
-			compact('edit', 'user', 'countries', 'socials', 'socialLogins', 'roles', 'statuses'));
+			compact('edit', 'user', 'countries', 'socials', 'roles', 'statuses')); //, 'socialLogins'
 	}
 
 	/**

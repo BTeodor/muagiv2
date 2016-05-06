@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'web'], function () {
 	// Route::get('login', 'Auth\AuthController@getLogin');
-	Route::post('login', 'Auth\AuthController@postLogin');
+	// Route::post('login', 'Auth\AuthController@postLogin');
 
 	Route::get('logout', [
 		'as' => 'auth.logout',
@@ -59,6 +59,10 @@ Route::group(['middleware' => 'web'], function () {
 				'as' => 'dashboard',
 				'uses' => 'DashboardController@index',
 			]);
+
+			Route::group(['prefix' => 'channel'], function(){
+				Route::get('index', 'Dashboard\ChannelCotroller@index');
+			});
 
 			Route::get('profile', [
 				'as' => 'profile',
