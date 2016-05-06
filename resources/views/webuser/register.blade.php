@@ -1,5 +1,5 @@
 @extends('webuser.app')
-
+@section('title', 'Register')
 @section('content')
 <div class="container-fluid">
 	<div class="row">

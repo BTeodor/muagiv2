@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-	Route::get('login', 'Auth\AuthController@getLogin');
+	// Route::get('login', 'Auth\AuthController@getLogin');
 	Route::post('login', 'Auth\AuthController@postLogin');
 
 	Route::get('logout', [
@@ -495,5 +495,9 @@ Route::group(['middleware' => 'web'], function(){
 		Route::get('login', 'WebUser\UserController@getLogin');
 
 		Route::get('register', 'WebUser\UserController@getRegister');
+
+		Route::post('register', 'WebUser\UserController@postRegister');
+
+		Route::post('login', 'WebUser\UserController@postLogin');
 	});
 });

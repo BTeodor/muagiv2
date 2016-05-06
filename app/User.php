@@ -93,4 +93,8 @@ TwoFactorAuthenticatableContract {
 	public function activities() {
 		return $this->hasMany(Activity::class, 'user_id');
 	}
+
+	public function role(){
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id')->withPivot('role_id');
+	}
 }
