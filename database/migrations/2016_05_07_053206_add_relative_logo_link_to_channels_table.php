@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToChannelTable extends Migration
+class AddRelativeLogoLinkToChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddUserIdToChannelTable extends Migration
     {
         Schema::table('channels', function (Blueprint $table) {
             //
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('relative_logo_link');
         });
     }
 
@@ -28,8 +27,7 @@ class AddUserIdToChannelTable extends Migration
     {
         Schema::table('channels', function (Blueprint $table) {
             //
-            $table->dropForeign('channels_user_id_foreign');
-            $table->dropColumn('user_id');
+            $table->dropColumn('relative_logo_link');
         });
     }
 }

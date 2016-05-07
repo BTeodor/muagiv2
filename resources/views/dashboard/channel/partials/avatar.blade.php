@@ -1,5 +1,5 @@
 <div class="well">
-    <h2 class="page-header">@lang('app.avatar')</h2>
+    <h2 class="page-header">Channel Logo</h2>
     <div class="avatar-wrapper">
         <div class="spinner">
             <div class="spinner-dot"></div>
@@ -8,7 +8,7 @@
         </div>
         <div id="avatar"></div>
         <div>
-            <img class="avatar-preview img-circle" src="{{ $edit ? $channel->logo : url('assets/img/profile.png') }}">
+            <img class="avatar-preview img-circle" src="{{ $edit && count($channel) ? asset($channel['relative_logo_link']) : url('assets/img/profile.png') }}">
             <div id="change-picture" class="btn bg-olive btn-block" data-toggle="modal" data-target="#choose-modal">
                 <i class="fa fa-camera"></i>
                 Change Logo
@@ -33,15 +33,10 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4 avatar-source" id="no-photo"
-                         data-url="{{ $updateUrl }}">
-                        <img src="{{ url('assets/img/profile.png') }}" class="img-circle">
-                        <p>No Photo</p>
-                    </div>
-                    <div class="col-md-4 avatar-source">
+                    <div class="col-md-12 avatar-source">
                         <div class="btn bg-olive btn-upload">
                             <i class="fa fa-upload"></i>
-                            <input type="file" name="avatar" id="avatar-upload">
+                            <input type="file" name="logo" id="avatar-upload">
                         </div>
                         <p>Upload Photo</p>
                     </div>

@@ -22,7 +22,7 @@
                     <div class="icon">
                         <i class="fa fa-television"></i>
                     </div>
-                    <p class="lead">Your Shopping Channel</p>
+                    <p class="lead">My Shopping Channel</p>
                 </div>
             </div>
         </a>

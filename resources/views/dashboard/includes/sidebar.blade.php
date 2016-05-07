@@ -22,6 +22,23 @@
                     <i class="fa fa-dashboard fa-fw"></i> <span>@lang('app.dashboard')</span>
                 </a>
             </li>
+            <li class="{{ Ekko::isActiveRoute('dashboard') }}">
+                <a href="{{ route('channel.index') }}">
+                    <i class="fa fa-dashboard fa-fw"></i> <span>Channel</span>
+                </a>
+            </li>
+            @if(isset($channel) && $channel != NULL)
+            <li class="{{ Ekko::isActiveRoute('dashboard') }}">
+                <a href="{{ route('channel.event.index') }}">
+                    <i class="fa fa-dashboard fa-fw"></i> <span>Event</span>
+                </a>
+            </li>
+            <li class="{{ Ekko::isActiveRoute('dashboard') }}">
+                <a href="{{ route('channel.index') }}">
+                    <i class="fa fa-dashboard fa-fw"></i> <span>Channel</span>
+                </a>
+            </li>
+            @endif
             @permission('users.manage')
                 <li class="{{ Ekko::isActiveRoute('user.list') }}">
                     <a href="{{ route('user.list') }}">
