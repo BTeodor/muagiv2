@@ -16,6 +16,21 @@
 
 <div class="row">
     <div class="col-lg-3 col-xs-6">
+        <a href="{{ route('channel.index') }}" class="panel-link">
+            <div class="panel panel-default dashboard-panel">
+                <div class="panel-body">
+                    <div class="icon">
+                        <i class="fa fa-television"></i>
+                    </div>
+                    <p class="lead">My Shopping Channel</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
         <a href="{{ route('profile') }}" class="panel-link">
             <div class="panel panel-default dashboard-panel">
                 <div class="panel-body">

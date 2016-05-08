@@ -13,7 +13,7 @@ class Channels extends Model
     protected $table = 'channels';
     protected $dates = ['deleted_at'];
     // protected $dateFormat = 'U';
-    protected $fillable = ['name', 'logo', 'homepage', 'hotline', 'description'];
+    protected $fillable = ['name', 'logo', 'homepage', 'hotline', 'description', 'relative_logo_link', 'user_id'];
 
     public function products(){
     	return $this->hasMany('App\Products', 'channel_id');
@@ -21,5 +21,13 @@ class Channels extends Model
 
     public function getAllProducts(){
     	return $this->hasMany('App\AllProduct', 'channel_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function event(){
+        return $this->hasMany('App\Event', 'channel_id');
     }
 }

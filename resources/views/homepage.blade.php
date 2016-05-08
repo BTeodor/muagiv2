@@ -49,7 +49,7 @@
             <li><a href="#developers">Developer</a></li>
             <li><a href="#pricing">Đầu tư</a></li>
             <li><a href="#contact">Liên hệ</a></li>
-            <li><a href="mailto:support@muagi.16mb.com?Subject=Product%20Enquiry" target="_top"> <i class="fa fa-envelope-o"></i><span class="home-mail">e-mail: support@muagi.16mb.com</span></a></li>
+            <li><a href="/auth/login"> <i class="fa fa-sign-in"></i><span>Sign In</span></a></li>
           </ul>
         </div>
         

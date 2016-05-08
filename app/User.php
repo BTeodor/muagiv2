@@ -101,4 +101,12 @@ TwoFactorAuthenticatableContract {
 	public function watch_recent(){
 		return $this->belongsToMany('App\Products', 'watch_recent', 'user_id', 'product_id')->withTimestamps()->withPivot('product_id');
 	}
+
+	public function role(){
+		return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id')->withPivot('role_id');
+	}
+
+	public function channel(){
+		return $this->hasOne('App\Channels');
+	}
 }

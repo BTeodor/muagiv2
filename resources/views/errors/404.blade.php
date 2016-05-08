@@ -26,7 +26,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="content">
 				<img src="{{asset('assets/img/error-img.png')}}" title="error" />
 				<p><span><label>O</label>pps....</span>You Requested the page that is no longer There.</p>
-				<a href="javascript:history.back()">Back</a>
+				<a href="/">Home</a>
 				<div class="copy-right">
 					<p>&#169 All rights Reserved | Designed by <a href="http://w3layouts.com/">W3Layouts</a></p>
 				</div>

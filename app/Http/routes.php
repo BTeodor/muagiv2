@@ -1,8 +1,8 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-	Route::get('login', 'Auth\AuthController@getLogin');
-	Route::post('login', 'Auth\AuthController@postLogin');
+	// Route::get('login', 'Auth\AuthController@getLogin');
+	// Route::post('login', 'Auth\AuthController@postLogin');
 
 	Route::get('logout', [
 		'as' => 'auth.logout',
@@ -59,6 +59,50 @@ Route::group(['middleware' => 'web'], function () {
 				'as' => 'dashboard',
 				'uses' => 'DashboardController@index',
 			]);
+
+			Route::group(['prefix' => 'channel'], function(){
+				Route::get('test', function(){
+					$user = \Auth::user();
+					// $channel = $user->channel()->get()->toArray() [0];
+					var_dump(json_encode($user->channel()));//->first()));
+				});
+				Route::get('index', ['as' => 'channel.index', 'uses' => 'ChannelController@index']);
+
+				Route::put('details/update', [
+					'as' => 'channel.details.update',
+					'uses' => 'ChannelController@updateDetails'
+				]);
+
+				Route::post('details/create', [
+					'as' => 'channel.details.create',
+					'uses' => 'ChannelController@createDetails'
+				]);
+
+				Route::post('avatar/update', [
+					'as' => 'channel.avatar.update',
+					'uses' => 'ChannelController@updateChannelAvatar'
+				]);
+
+				Route::get('event/index', [
+					'as' => 'channel.event.index',
+					'uses' => 'ChannelController@indexEvent'
+				]);
+
+				Route::put('event/update', [
+					'as' => 'channel.event.update',
+					'uses' => 'ChannelController@updateEvent'
+				]);
+
+				Route::post('event/create', [
+					'as' => 'channel.event.create',
+					'uses' => 'ChannelController@createEvent'
+				]);
+
+				Route::post('event/poster/update', [
+					'as' => 'channel.event.updatePoster',
+					'uses' => 'ChannelController@updatePoster'
+				]);
+			});
 
 			Route::get('profile', [
 				'as' => 'profile',
@@ -518,4 +562,16 @@ Route::get('crawler', function(){
 	$client = new Goutte\Client();
 	$crawler = $client->request('GET', 'http://www.scj.vn');
 	echo $crawler->filterXPath('//title/text()')->text();
+});
+
+Route::group(['middleware' => 'web'], function(){
+	Route::group(['prefix' => 'auth'], function(){
+		Route::get('login', 'WebUser\UserController@getLogin');
+
+		Route::get('register', 'WebUser\UserController@getRegister');
+
+		Route::post('register', 'WebUser\UserController@postRegister');
+
+		Route::post('login', 'WebUser\UserController@postLogin');
+	});
 });
