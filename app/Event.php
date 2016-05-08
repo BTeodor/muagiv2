@@ -14,4 +14,8 @@ class Event extends Model
     public function channel(){
     	return $this->belongsTo('App\Channels');
     }
+
+    public function products(){
+    	return $this->belongsToMany('App\Products', 'event_product', 'event_id', 'product_id')->withPivot('product_id');
+    }
 }

@@ -180,4 +180,25 @@ class ChannelController extends Controller
     	return redirect()->route('channel.event.index')->withSuccess('Successfully deleted');
     }
 
+    public function indexProduct(){
+    	$channel = $this->channel;
+    	if ($channel == NULL) {
+    		$products == NULL;
+    		return response()->json([
+    			'status' => false
+    		]);
+    	}
+
+    	$products = App\Products::where('channel_id', $channel['id'])->get();
+
+    	$events = App\Event::where('channel_id', $channel['id'])->get();
+
+    	$categories = App\Category::all();
+
+		$clock = new App\ExternalClasses\MyClock();
+
+		$today = $clock->get_today_date_GMT_7("Y-m-d");
+
+		return view('dashboard.channel.product', compact('products', 'events', 'categories', 'today'));
+    }
 }

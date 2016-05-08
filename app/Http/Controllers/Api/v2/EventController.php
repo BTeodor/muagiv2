@@ -81,4 +81,29 @@ class EventController extends Controller
 			'data' => $events
 		]);
     }
+
+    /**
+     * Return all products in one event
+     */
+    public function listProducts(Request $request){
+        $event_id = $request->event_id;
+        $event = App\Event::find($event_id);
+        if(count($event) == 0 || count($event->products) == 0)
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'Event not found or there is no product in this event']
+            ]);
+        $list_id = array();
+        foreach ($event->products as $product) {
+            array_push($list_id, $product->pivot->product_id);
+        }
+        $data = array();
+        foreach ($list_id as $product_id) {
+            array_push($data, App\Products::where('id', $product_id)->get(array('id', 'title', 'video_link', 'product_link', 'channel_id', 'old_price', 'new_price', 'start_date', 'start_time', 'end_time', 'available_time')));
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
 }

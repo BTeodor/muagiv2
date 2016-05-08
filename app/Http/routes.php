@@ -107,6 +107,11 @@ Route::group(['middleware' => 'web'], function () {
 					'as' => 'channel.event.delete',
 					'uses' => 'ChannelController@deleteEvent'
 				]);
+
+				Route::get('product/index', [
+					'as' => 'channel.product.index',
+					'uses' => 'ChannelController@indexProduct'
+				]);
 			});
 
 			Route::get('profile', [
@@ -565,6 +570,11 @@ Route::group(['middleware' => 'web'], function(){
 		Route::post('event/find', 'Api\v2\EventController@findEventById');
 
 		Route::get('event/index', 'Api\v2\EventController@index');
+
+		Route::post('event/product', [
+			'as' => 'channel.event.listProducts',
+			'uses' => 'Api\v2\EventController@listProducts'
+		]);
 	});
 
 });
