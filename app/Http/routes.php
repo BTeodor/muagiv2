@@ -556,6 +556,10 @@ Route::group(['middleware' => 'web'], function(){
 		]);
 
 		Route::post('channel/event', 'Api\v2\EventController@listByChannelId');
+
+		Route::post('event/find', 'Api\v2\EventController@findEventById');
+
+		Route::get('event/index', 'Api\v2\EventController@index');
 	});
 
 });
