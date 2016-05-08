@@ -554,6 +554,8 @@ Route::group(['middleware' => 'web'], function(){
 			'as' => 'recent.list',
 			'uses' => 'Api\v2\RecentController@index'
 		]);
+
+		Route::post('channel/event', 'Api\v2\EventController@listByChannelId');
 	});
 
 });
