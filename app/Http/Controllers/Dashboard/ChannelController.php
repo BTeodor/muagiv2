@@ -174,8 +174,10 @@ class ChannelController extends Controller
 		return redirect()->route('channel.event.index')->withSuccess('Successfully updated poster');
     }
 
-    public function deleteEvent(){
-    	
+    public function deleteEvent(Request $request){
+    	$event_id = $request->event_id;
+    	App\Event::destroy($event_id);
+    	return redirect()->route('channel.event.index')->withSuccess('Successfully deleted');
     }
 
 }

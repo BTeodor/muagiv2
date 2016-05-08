@@ -102,6 +102,11 @@ Route::group(['middleware' => 'web'], function () {
 					'as' => 'channel.event.updatePoster',
 					'uses' => 'ChannelController@updatePoster'
 				]);
+
+				Route::post('event/delete', [
+					'as' => 'channel.event.delete',
+					'uses' => 'ChannelController@deleteEvent'
+				]);
 			});
 
 			Route::get('profile', [

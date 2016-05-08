@@ -43,7 +43,7 @@
                 <div class="col-lg-9 col-md-8">
                     {!! Form::open(['route' => 'channel.event.update', 'method' => 'PUT', 'id' => 'events-form-'.$event->id]) !!}
                         @include('dashboard.channel.partials.events-details')
-                    {!! Form::close() !!}    
+                        
                 </div>
                 <div class="col-lg-3 col-md-4">
                     {!! Form::open(['route' => 'channel.event.updatePoster',  'files' => true]) !!}

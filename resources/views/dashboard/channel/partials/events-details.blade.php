@@ -47,7 +47,18 @@
                     <i class="fa fa-refresh"></i>
                     Update Event
                 </button>
+                {!! Form::close() !!}
             </div>
+            <div class="col-md-6">
+                {!! Form::open(['route' => 'channel.event.delete', 'method' => 'POST', 'id' => 'events-create-form']) !!}
+                    <input type="hidden" name="event_id" value="{{ $event->id }}"></input>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-times"></i>
+                        Delete Event
+                    </button>
+                {!! Form::close() !!}
+            </div>
+
         </div>
     </div>
 
