@@ -12,6 +12,9 @@ use App\Http\Requests\UpdateChannelRequest;
 use App\Http\Requests\CreateChannelRequest;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Input;
 
 class ChannelController extends Controller
 {
@@ -24,17 +27,17 @@ class ChannelController extends Controller
 		$this->middleware('auth');
 		$this->middleware('session.database', ['only' => ['sessions', 'invalidateSession']]);       
 		$this->user = \Auth::user();
-		$channel = $this->user->channel()->get()->toArray();
-		$this->channel = isset($channel[0]) ? App\Channels::find($channel[0] ['id']) : NULL;
+		// $channel = $this->user->channel()->get()->toArray();
+        $channel = $this->user->channel;
+		$this->channel = count($channel) ? $channel : NULL;
 	}
 
 	public function index(){
 		$edit = true;
 		$this->user = \Auth::user();
-		$channel = $this->user->channel()->get()->toArray();
-		$this->channel = isset($channel[0]) ? App\Channels::find($channel[0] ['id']) : NULL;
-		$user = $this->user;
-		$channel = $this->channel;
+        $channel = $this->user->channel;
+        $this->channel = count($channel) ? $channel : NULL;
+        $user = $this->user;
 		return view('dashboard.channel.channel', compact('edit', 'user', 'channel'));
 	}
 
@@ -129,8 +132,7 @@ class ChannelController extends Controller
     	$user = $this->user;
     	
     	$edit = true;
-    	$channel = $this->channel;
-    	$events = App\Event::where('channel_id', $channel['id'])->get();
+    	$events = App\Event::where('channel_id', $channel->id)->get();
     	return view('dashboard.channel.event', compact('events', 'user', 'edit', 'channel'));
     }
 
@@ -188,17 +190,223 @@ class ChannelController extends Controller
     			'status' => false
     		]);
     	}
+        $perPage = 10;
+        $query = App\Products::query()->withTrashed()->where('channel_id', $channel->id);
+        if (Input::get('category')) {
+            if(Input::get('category') != 1000)
+            $query->whereIn('id', function($q){
+                $q->select('product_id')->from('category_product')->where('category_id', Input::get('category'));  
+            });
+        }
+        $search = Input::get('search');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', "like", "%{$search}%");
+                $q->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $products = $query->paginate($perPage);
+        if ($search) {
+            $products->appends(['search' => $search]);
+        }
 
-    	$products = App\Products::where('channel_id', $channel['id'])->get();
-
-    	$events = App\Event::where('channel_id', $channel['id'])->get();
-
+        $user = $this->user;
+    	$events = App\Event::where('channel_id', $channel->id)->get();
     	$categories = App\Category::all();
+        $category_name = array();
+        $id = array();
+        $name_en = array();
+        array_push($id, 1000);
+        array_push($name_en, "All");
 
-		$clock = new App\ExternalClasses\MyClock();
+        foreach($categories as $category){
+            array_push($id, $category->id);
+            array_push($name_en, $category->name_en);
+        }
 
-		$today = $clock->get_today_date_GMT_7("Y-m-d");
+        $category_name = array_combine($id, $name_en);
+        $channel = $this->channel;
 
-		return view('dashboard.channel.product', compact('products', 'events', 'categories', 'today'));
+		return view('dashboard.channel.product', compact('products', 'events', 'categories', 'user', 'category_name', 'channel'));
+    }
+
+    public function createProduct(){
+        $channel = $this->channel;
+        if ($channel == NULL) {
+            $products == NULL;
+            return response()->json([
+                'status' => false
+            ]);
+        }
+
+        $user = $this->user;
+        $products = App\Products::where('channel_id', $channel->id)->get();
+        $events = App\Event::where('channel_id', $channel->id)->get();
+        $categories = App\Category::all();
+        return view('dashboard.channel.product.add', compact('products', 'events', 'categories', 'user'));
+    }
+
+    public function storeProduct(CreateProductRequest $request){
+    	$data = [
+    		'title' => $request->title,
+    		'old_price' => $request->old_price,
+    		'new_price' => $request->new_price,
+    		'description' => $request->description,
+    		'channel_id' => $this->channel->id
+    	];
+
+    	$product = App\Products::firstOrCreate($data);
+
+    	/**
+    	 * generate product link
+    	 */
+        $link = \URL::to('/').'/'.'product/'.$product->id;
+    	if (empty($request->product_link)) {
+    		$product->update(['product_link' => $link, 'auto_link' => $link]);
+    	}
+    	else $product->update(['product_link' => $request->product_link, 'auto_link' => $link]);
+
+    	/**
+    	 * image processing
+    	 */
+		if (($request->file('image_file')) != NULL) {
+			$desPath = "upload/channel/product/";
+			$imageName = $product->id . '.' . $request->file('image_file')->getClientOriginalExtension();
+			$request->file('image_file')->move($desPath, $imageName);
+			$relative_image_link = '/upload/channel/product/' . $imageName;
+			$image_link = \URL::to('/') . $relative_image_link;
+		}
+		if (!empty($request->image_link)) {
+			$image_link = $request->image_link;
+			$relative_image_link = "";
+		}
+		$product->update(['image_link' => $image_link, 'relative_image_link' => $relative_image_link]);
+
+    	/**
+    	 * Categorize
+    	 */
+    	$list_category_id = array();
+    	$categories = $request->category;
+    	if ($categories != "") {
+    		foreach ($categories as $key => $value) {
+    			if ($value != "") {
+    				array_push($list_category_id, intval($value));
+    			}
+    		}
+    		$product->categories()->sync($list_category_id);
+    	}
+
+    	/**
+    	 * Add to event
+    	 */
+    	$list_event_id = array();
+    	$events = $request->event;
+    	if ($events != "") {
+    		foreach ($events as $key => $value) {
+    			if ($value != "") {
+    				array_push($list_event_id, intval($value));
+    			}
+    		}
+    		$product->events()->sync($list_event_id);
+    	}
+    	return redirect()->route('channel.product.index')->withSuccess('Product successfully added');
+    	// print_r($categories);
+    	// var_dump($list_category_id);
+    	// print_r($events);
+    	// var_dump($list_event_id);
+    }
+
+    public function editProduct($id){
+        $product = App\Products::withTrashed()->where('id', $id)->first();
+        $categories = App\Category::all();
+        $chosen_categories = $product->categories;
+        $events = $product->events;
+        $channel = $product->channel;
+        $available_events = $channel->event;
+        return view('dashboard.channel.product.edit', compact('product', 'events', 'channel', 'available_events', 'categories', 'chosen_categories'));
+    }
+
+    public function updateProduct($id, UpdateProductRequest $request){
+        $product = App\Products::withTrashed()->where('id', $id)->first();
+
+        $data = [
+            'title' => $request->title,
+            'old_price' => $request->old_price,
+            'new_price' => $request->new_price,
+            'description' => $request->description,
+            'channel_id' => $this->channel->id
+        ];
+        $product->update($data);
+        /**
+         * generate product link
+         */
+        $link = \URL::to('/').'/'.'product/'.$product->id;
+        if (empty($request->product_link)) {
+            $product->update(['product_link' => $link, 'auto_link' => $link]);
+        }
+        else $product->update(['product_link' => $request->product_link, 'auto_link' => $link]);
+
+        /**
+         * image processing
+         */
+        if (($request->file('image_file')) != NULL) {
+            $desPath = "upload/channel/product/";
+            $imageName = $product->id . '.' . $request->file('image_file')->getClientOriginalExtension();
+            $request->file('image_file')->move($desPath, $imageName);
+            $relative_image_link = '/upload/channel/product/' . $imageName;
+            $image_link = \URL::to('/') . $relative_image_link;
+        }
+        if (!empty($request->image_link)) {
+            $image_link = $request->image_link;
+            $relative_image_link = "";
+        }
+        $product->update(['image_link' => $image_link, 'relative_image_link' => $relative_image_link]);
+
+        /**
+         * Categorize
+         */
+        $list_category_id = array();
+        $categories = $request->category;
+        if ($categories != "") {
+            foreach ($categories as $key => $value) {
+                if ($value != "") {
+                    array_push($list_category_id, intval($value));
+                }
+            }
+            $product->categories()->sync($list_category_id);
+    }
+
+        /**
+         * Add to event
+         */
+        $list_event_id = array();
+        $events = $request->event;
+        if ($events != "") {
+            foreach ($events as $key => $value) {
+                if ($value != "") {
+                    array_push($list_event_id, intval($value));
+                }
+            }
+            $product->events()->sync($list_event_id);
+        }
+
+        return redirect()->route('channel.product.index')->withSuccess('Product successfully updated');
+    }
+
+    public function deleteProduct($id){
+        $product = App\Products::find($id);
+        if ($product->channel->id != $this->channel->id) {
+            return redirect()->route('channel.product.index')->withErrors('You do not have permission to do this');
+        }
+        if(count($product)) $product->delete();
+
+        return redirect()->route('channel.product.index')->withSuccess('Successfully deleted');
+    }
+
+    public function restoreProduct($id){
+        $product = App\Products::onlyTrashed()->where('id', $id)->first();
+        if(count($product)) $product->restore();
+
+        return redirect()->route('channel.product.index')->withSuccess('Successfully restored');
     }
 }

@@ -1,8 +1,8 @@
 @extends('dashboard.layouts.master')
-@section('page-title', 'Products List')
+@section('page-title', 'Products Management')
 @section('page-header')
 <h1>
-@lang('app.users')
+Products
 </h1>
 <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> @lang('app.home')</a></li>

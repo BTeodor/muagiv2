@@ -34,7 +34,7 @@
                 </a>
             </li>
             <li class="{{ Ekko::isActiveRoute('dashboard') }}">
-                <a href="{{ route('channel.event.index') }}">
+                <a href="{{ route('channel.product.index') }}">
                     <i class="fa fa-dashboard fa-fw"></i> <span>Products</span>
                 </a>
             </li>

@@ -41,4 +41,20 @@ class ProductController extends Controller
     	]);
 
     }
+
+    public function showProduct($id){
+        $product = Products::withTrashed()->where('id', $id)->first();
+        $channel = $product->channel;
+        $event = $product->event;
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'product' => $product,
+                'channel' => $channel,
+                'event' => $event
+            ]
+        ]);
+        return view('dashboard.channel.product.show', compact('product', 'channel', 'event'));
+    }
 }

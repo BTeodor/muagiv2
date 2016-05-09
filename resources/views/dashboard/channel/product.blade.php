@@ -1,79 +1,129 @@
 @extends('dashboard.layouts.master')
-
-@section('page-title', 'Products')
-
+@section('page-title', 'Products Management')
 @section('page-header')
-    <h1>
-        {{ $user->present()->nameOrEmail }}
-        <small>Products Management</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> @lang('app.home')</a></li>
-        <li class="active">@lang('app.my_profile')</li>
-     </ol>
+<h1>
+Products
+</h1>
+<ol class="breadcrumb">
+    <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> @lang('app.home')</a></li>
+    <li class="active">Products</li>
+</ol>
 @endsection
-
 @section('content')
-
 @include('partials.messages')
 
-<div class="nav-tabs-custom">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-            <a href="#products-list" aria-controls="products-list" role="tab" data-toggle="tab">
-                <i class="glyphicon glyphicon-th"></i>
-                Products List
-            </a>
-        </li>
-        <li role="presentation" class="">
-            <a href="#product-create" aria-controls="product-create" role="tab" data-toggle="tab">
-                <i class="glyphicon glyphicon-th"></i>
-                Add product
-            </a>
-        </li>
-    </ul>
-    
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="products-list">
-        @if(isset($products) && count($products) > 0)
-            @foreach($products as $product)
-            <div class="row">
-                <div class="col-lg-9 col-md-8">
-                    {!! Form::open(['route' => 'channel.product.update', 'method' => 'PUT', 'id' => 'products-form-'.$product->id]) !!}
-                        @include('dashboard.channel.partials.product-detail')
-                        
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    {!! Form::open(['route' => 'channel.event.updatePoster',  'files' => true]) !!}
-                        @include('dashboard.channel.partials.event-logo')
-                    {!! Form::close() !!}
-                </div>
-            </div>
-            @endforeach
-        @endif
+<div class="row tab-search">
+    <div class="col-md-2 col-xs-2">
+        <a href="{{ route('channel.product.create') }}" class="btn btn-success" id="add-user">
+            <i class="glyphicon glyphicon-plus"></i>
+            Add product
+        </a>
+    </div>
+    <div class="col-md-5 col-xs-3"></div>
+    <!-- Search Form -->
+    <form method="GET" action="" accept-charset="UTF-8" id="products-form">
+        <div class="col-md-2 col-xs-3">
+            {!! Form::select('category', $category_name, Input::get('category'), ['id' => 'category', 'class' => 'form-control']) !!}
         </div>
-        <div role="tabpanel" class="tab-pane" id="product-create">
-            <div class="row">
-                <div class="col-lg-8 col-md-7">
-                    {!! Form::open(['route' => 'channel.product.create', 'method' => 'POST', 'id' => 'product-create-form']) !!}
-                        @include('dashboard.channel.partials.product-create')
-                    {!! Form::close() !!}
+        <div class="col-md-3 col-xs-4">
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" name="search" value="{{ Input::get('search') }}" placeholder="Search for product by name or description">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" id="search-products-btn">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    @if (Input::has('search') && Input::get('search') != '')
+                        <a href="{{ route('channel.product.index') }}" class="btn btn-danger" type="button" >
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    @endif
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">List of products</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <div id="products-table-wrapper">
+                    <table class="table table-hover table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Title</th>
+                                <th>Product link</th>
+                                <th>Original link</th>
+                                <th>Regular Price</th>
+                                <th>New Price</th>
+                                <th>Status</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                            </tr>
+                            @if (count($products))
+                            @foreach ($products as $product)
+                            <tr>
+                                <td>{{ $product->title}}</td>
+                                <td>{{ $product->product_link}}</td>
+                                <td>{{ $product->auto_link}}</td>
+                                <td>{{ $product->old_price }}</td>
+                                <td>{{ $product->new_price }}</td>
+                                <td>{{ $product->deleted_at ? "Deleted" : "Active" }}</td>
+                                <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
+                                <td class="text-center">
+                                    <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
+                                        title="Show product" data-toggle="tooltip" data-placement="top">
+                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                    </a>
+                                    <a href="{{ route('channel.product.edit', $product->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
+                                        data-toggle="tooltip" data-placement="top">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                    @if($product->deleted_at == NULL)
+                                    <a href="{{ route('channel.product.delete', $product->id) }}" class="btn btn-danger btn-circle" title="Delete product"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        data-method="DELETE"
+                                        data-confirm-title="Please Confirm'"
+                                        data-confirm-text="Are you sure to delete this product"
+                                        data-confirm-delete="Yes, delete it">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                    @else
+                                    <a href="{{ route('channel.product.restore', $product->id) }}" class="btn btn-danger btn-circle" title="Restore product"
+                                        data-toggle="tooltip" data-placement="top"
+                                        data-method="DELETE"
+                                        data-confirm-title="Please Confirm'"
+                                        data-confirm-text="Are you sure to restore this product"
+                                        data-confirm-delete="Yes, restore it">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="6"><em>@lang('app.no_records_found')</em></td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    {!! $products->render() !!}
                 </div>
             </div>
         </div>
     </div>
 </div>
 @stop
-
 @section('after-scripts-end')
-    {!! Html::script('assets/js/btn.js') !!}
-    {!! Html::script('assets/js/profile.js') !!}
-    {!! JsValidator::formRequest('App\Http\Requests\User\UpdateDetailsRequest', '#details-form') !!}
-    {!! JsValidator::formRequest('App\Http\Requests\User\UpdateProfileLoginDetailsRequest', '#login-details-form') !!}
-
-    @if (config('auth.2fa.enabled'))
-        {!! JsValidator::formRequest('App\Http\Requests\User\EnableTwoFactorRequest', '#two-factor-form') !!}
-    @endif
+<script>
+$("#category").change(function () {
+$("#products-form").submit();
+});
+</script>
 @stop

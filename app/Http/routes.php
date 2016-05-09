@@ -1,8 +1,8 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-	// Route::get('login', 'Auth\AuthController@getLogin');
-	// Route::post('login', 'Auth\AuthController@postLogin');
+	Route::get('login', 'WebUser\UserController@getLogin');
+	Route::post('login', 'WebUser\UserController@postLogin');
 
 	Route::get('logout', [
 		'as' => 'auth.logout',
@@ -111,6 +111,40 @@ Route::group(['middleware' => 'web'], function () {
 				Route::get('product/index', [
 					'as' => 'channel.product.index',
 					'uses' => 'ChannelController@indexProduct'
+				]);
+
+				Route::get('product/{id}/show', [
+					'as' => 'channel.product.show',
+					'uses' => 'ChannelController@showProduct'
+				]);
+
+				Route::get('product/{id}/edit', [
+					'as' => 'channel.product.edit',
+					'uses' => 'ChannelController@editProduct'
+				]);
+
+				Route::put('product/update', [
+					'as' => 'channel.product.update',
+					'uses' => 'ChannelController@updateProduct'
+				]);
+
+				Route::get('product/create', [
+					'as' => 'channel.product.create',
+					'uses' => 'ChannelController@createProduct'
+				]);
+				Route::post('product/create', [
+					'as' => 'channel.product.store',
+					'uses' => 'ChannelController@storeProduct'
+				]);
+
+				Route::delete('product/{id}/delete', [
+					'as' => 'channel.product.delete',
+					'uses' => 'ChannelController@deleteProduct'
+				]);
+
+				Route::delete('product/{id}/restore', [
+					'as' => 'channel.product.restore',
+					'uses' => 'ChannelController@restoreProduct'
 				]);
 			});
 
@@ -595,4 +629,11 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::post('login', 'WebUser\UserController@postLogin');
 	});
+});
+
+Route::get('product/{id}', 'Api\v2\ProductController@showProduct');
+
+Route::get('user/{id}', function($id){
+	$channel = App\User::find($id)->channel;
+	echo count($channel);
 });
