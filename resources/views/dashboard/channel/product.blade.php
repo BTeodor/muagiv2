@@ -68,8 +68,8 @@ Products
                             @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->title}}</td>
-                                <td>{{ $product->product_link}}</td>
                                 <td>{{ $product->auto_link}}</td>
+                                <td>{{ $product->product_link}}</td>
                                 <td>{{ $product->old_price }}</td>
                                 <td>{{ $product->new_price }}</td>
                                 <td>{{ $product->deleted_at ? "Deleted" : "Active" }}</td>

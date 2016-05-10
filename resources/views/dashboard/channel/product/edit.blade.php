@@ -18,7 +18,7 @@
 
 @include('partials.messages')
 
-{!! Form::open(['route' => 'channel.product.update', $product->id, 'method' => 'PUT', 'id' => 'product-edit-form', 'files' => true]) !!}
+{!! Form::open(['route' => 'channel.product.update', 'method' => 'PUT', 'id' => 'product-edit-form', 'files' => true]) !!}
     @include('dashboard.channel.partials.product-edit-form')
 {!! Form::close() !!}
 

@@ -9,7 +9,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> @lang('app.home')</a></li>
-        <li class="active">@lang('app.my_profile')</li>
+        <li class="active">Channel</li>
      </ol>
 @endsection
 

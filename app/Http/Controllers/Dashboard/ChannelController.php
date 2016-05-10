@@ -27,7 +27,9 @@ class ChannelController extends Controller
 		$this->middleware('auth');
 		$this->middleware('session.database', ['only' => ['sessions', 'invalidateSession']]);       
 		$this->user = \Auth::user();
-		// $channel = $this->user->channel()->get()->toArray();
+        if (!\Auth::check()) {
+            return redirect()->route('user.getLogin')->withErrors('Login first');
+        }
         $channel = $this->user->channel;
 		$this->channel = count($channel) ? $channel : NULL;
 	}
@@ -238,12 +240,12 @@ class ChannelController extends Controller
                 'status' => false
             ]);
         }
-
+        $channel = $this->channel;
         $user = $this->user;
         $products = App\Products::where('channel_id', $channel->id)->get();
         $events = App\Event::where('channel_id', $channel->id)->get();
         $categories = App\Category::all();
-        return view('dashboard.channel.product.add', compact('products', 'events', 'categories', 'user'));
+        return view('dashboard.channel.product.add', compact('products', 'events', 'categories', 'user', 'channel'));
     }
 
     public function storeProduct(CreateProductRequest $request){
@@ -299,16 +301,19 @@ class ChannelController extends Controller
     	/**
     	 * Add to event
     	 */
-    	$list_event_id = array();
-    	$events = $request->event;
-    	if ($events != "") {
-    		foreach ($events as $key => $value) {
-    			if ($value != "") {
-    				array_push($list_event_id, intval($value));
-    			}
-    		}
-    		$product->events()->sync($list_event_id);
-    	}
+        if(empty($request->event)) $product->events()->detach();
+        else {
+        	$list_event_id = array();
+        	$events = $request->event;
+        	if ($events != "") {
+        		foreach ($events as $key => $value) {
+        			if ($value != "") {
+        				array_push($list_event_id, intval($value));
+        			}
+        		}
+        		$product->events()->sync($list_event_id);
+        	}
+        }
     	return redirect()->route('channel.product.index')->withSuccess('Product successfully added');
     	// print_r($categories);
     	// var_dump($list_category_id);
@@ -320,13 +325,17 @@ class ChannelController extends Controller
         $product = App\Products::withTrashed()->where('id', $id)->first();
         $categories = App\Category::all();
         $chosen_categories = $product->categories;
-        $events = $product->events;
+        
         $channel = $product->channel;
-        $available_events = $channel->event;
-        return view('dashboard.channel.product.edit', compact('product', 'events', 'channel', 'available_events', 'categories', 'chosen_categories'));
+        $events = $this->channel->event;
+        $chosen_events = $product->events;
+        // return response()->json($categories);
+        // return response()->json(['1' => count($categories), '2' => count($chosen_categories)]);
+        return view('dashboard.channel.product.edit', compact('product', 'events', 'channel', 'chosen_events', 'categories', 'chosen_categories'));
     }
 
-    public function updateProduct($id, UpdateProductRequest $request){
+    public function updateProduct(UpdateProductRequest $request){
+        $id = $request->product_id;
         $product = App\Products::withTrashed()->where('id', $id)->first();
 
         $data = [
@@ -379,18 +388,20 @@ class ChannelController extends Controller
         /**
          * Add to event
          */
-        $list_event_id = array();
-        $events = $request->event;
-        if ($events != "") {
-            foreach ($events as $key => $value) {
-                if ($value != "") {
-                    array_push($list_event_id, intval($value));
+        if(empty($request->event)) $product->events()->detach();
+        else {
+            $list_event_id = array();
+            $events = $request->event;
+            if ($events != "") {
+                foreach ($events as $key => $value) {
+                    if ($value != "") {
+                        array_push($list_event_id, intval($value));
+                    }
                 }
+                $product->events()->sync($list_event_id);
             }
-            $product->events()->sync($list_event_id);
         }
-
-        return redirect()->route('channel.product.index')->withSuccess('Product successfully updated');
+        return redirect()->route('channel.product.edit', $product->id)->withSuccess('Product successfully updated');
     }
 
     public function deleteProduct($id){

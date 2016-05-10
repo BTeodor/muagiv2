@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-	Route::get('login', 'WebUser\UserController@getLogin');
+	Route::get('login', ['as' => 'user.getLogin', 'uses' => 'WebUser\UserController@getLogin']);
 	Route::post('login', 'WebUser\UserController@postLogin');
 
 	Route::get('logout', [
@@ -452,7 +452,7 @@ Route::group(['prefix' => 'api/v1'], function(){
 		$current_time_hh_mm_GMT_7 = $clock->get_current_time_GMT_7("H:i");
 		$current_unix_time_UTC = $clock->get_unix_time_UTC_from_GMT_7($current_time_hh_mm_GMT_7, $today);
 		// $pattern = $today.'%';
-		$products = DB::table('products')->where('start_date', $today)->orderBy('start_time', 'asc')->get();
+		$products = App\Products::where('start_date', $today)->orderBy('start_time', 'asc')->get();
 		$array = array();
 
 		function item_type($start_time, $end_time, $current_time){

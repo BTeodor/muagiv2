@@ -25,11 +25,11 @@ class UpdateProductRequest extends Request
     {
         return [
             //
-            'title' => 'required|unique:products,title,'.$this->id.',id',
+            'title' => 'required', //|unique:products,title,'.$this->id.',id',
             'image_file' => 'mimes:png,jpg,bmp,jpeg',
             'image_link' => 'url',
             'product_link' => 'url',
-            'old_price' => 'required'
+            'old_price' => 'required',
         ];
     }
 }

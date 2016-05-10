@@ -3,18 +3,27 @@
         <div class="form-group">
             <label for="category">Category (Hold Ctrl to select multiple choices)</label>
             <select multiple class="form-control" id="category" name="category[]" required>
-                @for($i = 0; $i < count($categories); $i++)
+                @foreach($categories as $category)
+                    {{$mark = 0}}
+                    {{$flag = 0}}
+                    {{$num = 0}}
                     @if(isset($chosen_categories))
-                        @for($j = 0; $j < count($chosen_categories); $j++)
-                        @if($categories[$i]->name_en == $chosen_categories[$j]->name_en) 
-                        <option value="{{$categories[$i]->id}}" selected>{{$categories[$i]->name_en}}</option>
-                            {{$i++}}
-                            {{$j++}}
-                        @endif
-                        @endfor
+                        @foreach($chosen_categories as $chosen_category)
+                            {{$num += 1}}
+                            @if($category->id != $chosen_category->id) 
+                            {{$mark += 1}}
+                            @endif
+                        @endforeach
                     @endif
-                    <option value="{{$categories[$i]->id}}">{{$categories[$i]->name_en}}</option>
-                @endfor
+                    @if($mark == $num) {{$flag = 0}}
+                    @else {{$flag = 1}}
+                    @endif
+                    @if($flag == 1)
+                        <option value="{{$category->id}}" selected>{{$category->name_en}}</option>
+                    @else
+                        <option value="{{$category->id}}">{{$category->name_en}}</option>
+                    @endif
+                @endforeach
             </select>
         </div>
     </div>
@@ -23,7 +32,25 @@
             <label for="event">Events</label>
             <select multiple class="form-control" id="event" name="event[]">
                 @foreach($events as $event)
-                <option value="{{$event->id}}">{{$event->title}}</option>
+                    {{$mark = 0}}
+                    {{$flag = 0}}
+                    {{$num = 0}}
+                    @if(isset($chosen_events))
+                        @foreach($chosen_events as $chosen_event)
+                            {{$num += 1}}
+                            @if($event->id != $chosen_event->id) 
+                            {{$mark += 1}}
+                            @endif
+                        @endforeach
+                    @endif
+                    @if($mark == $num) {{$flag = 0}}
+                    @else {{$flag = 1}}
+                    @endif
+                    @if($flag == 1)
+                        <option value="{{$event->id}}" selected>{{$event->title}}</option>
+                    @else
+                        <option value="{{$event->id}}">{{$event->title}}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
