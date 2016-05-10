@@ -19,16 +19,26 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="start_time_string">Start Time</label>
-                    <input type="time" class="form-control" id="start_time_string"
-                           name="start_time_string" placeholder="" required min="00:00" max="23:59">
+                <label for="start_time_string">Start Time</label>
+                    <div class="input-group date" id="datetimepicker1">
+                        <input type="text" class="form-control" id="start_time_string"
+                               name="start_time_string" required>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="end_time_string">End Time</label>
-                    <input type="time" class="form-control" id="end_time_string"
-                           name="end_time_string" min="00:00" max="23:59">
+                    <div class="input-group date" id="datetimepicker2">
+                        <input type="text" class="form-control" id="end_time_string"
+                               name="end_time_string" required>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -54,7 +64,5 @@
                 </button>
             </div>
         </div>
-
     </div>
-
 </div>

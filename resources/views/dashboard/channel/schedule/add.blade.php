@@ -21,7 +21,16 @@
 {!! Form::open(['route' => 'channel.schedule.store', 'method' => 'POST', 'id' => 'schedule-create-form']) !!}
     @include('dashboard.channel.schedule.schedule-create-form')
 {!! Form::close() !!}
-
+<script type="text/javascript">
+    $(function(){
+        $('#datetimepicker1').datetimepicker({
+            format: 'hh:mm'
+        });
+        $('#datetimepicker2').datetimepicker({
+            format: 'hh:mm'
+        });
+    });
+</script>
 @stop
 
 @section('after-scripts-end')
