@@ -271,6 +271,8 @@ class ChannelController extends Controller
     	/**
     	 * image processing
     	 */
+        $image_link = "";
+        $relative_image_link = "";
 		if (($request->file('image_file')) != NULL) {
 			$desPath = "upload/channel/product/";
 			$imageName = $product->id . '.' . $request->file('image_file')->getClientOriginalExtension();
