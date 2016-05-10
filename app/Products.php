@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use App;
 class Products extends Model
 {
     //
@@ -59,5 +60,10 @@ class Products extends Model
         }
 
         return $result;
+    }
+
+    public function schedule(){
+        $schedules = App\Schedule::where('product_id', $this->id)->get();
+        return $schedules;
     }
 }

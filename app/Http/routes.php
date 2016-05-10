@@ -146,6 +146,11 @@ Route::group(['middleware' => 'web'], function () {
 					'as' => 'channel.product.restore',
 					'uses' => 'ChannelController@restoreProduct'
 				]);
+
+				Route::get('schedule/index', [
+					'as' => 'channel.schedule.index',
+					'uses' => 'ChannelController@indexSchedule'
+				]);
 			});
 
 			Route::get('profile', [

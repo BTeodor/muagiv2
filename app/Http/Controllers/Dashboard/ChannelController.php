@@ -15,7 +15,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Input;
-
+use DB;
 class ChannelController extends Controller
 {
     //
@@ -254,7 +254,8 @@ class ChannelController extends Controller
     		'old_price' => $request->old_price,
     		'new_price' => $request->new_price,
     		'description' => $request->description,
-    		'channel_id' => $this->channel->id
+    		'channel_id' => $this->channel->id,
+            'video_link' => $request->video_link
     	];
 
     	$product = App\Products::firstOrCreate($data);
@@ -345,7 +346,8 @@ class ChannelController extends Controller
             'old_price' => $request->old_price,
             'new_price' => $request->new_price,
             'description' => $request->description,
-            'channel_id' => $this->channel->id
+            'channel_id' => $this->channel->id,
+            'video_link' => $request->video_link
         ];
         $product->update($data);
         /**
@@ -360,6 +362,8 @@ class ChannelController extends Controller
         /**
          * image processing
          */
+        $image_link = "";
+        $relative_image_link = "";
         if (($request->file('image_file')) != NULL) {
             $desPath = "upload/channel/product/";
             $imageName = $product->id . '.' . $request->file('image_file')->getClientOriginalExtension();
@@ -421,5 +425,56 @@ class ChannelController extends Controller
         if(count($product)) $product->restore();
 
         return redirect()->route('channel.product.index')->withSuccess('Successfully restored');
+    }
+
+    /**
+     * For schedule controller
+     */
+    public function indexSchedule(){
+        $channel = $this->channel;
+        if ($channel == NULL) {
+            $products == NULL;
+            return response()->json([
+                'status' => false
+            ]);
+        }
+        $perPage = 10;
+        $query = App\Products::query()->where('channel_id', $channel->id);
+        if (Input::get('category')) {
+            if(Input::get('category') != 1000)
+            $query->whereIn('id', function($q){
+                $q->select('product_id')->from('category_product')->where('category_id', Input::get('category'));  
+            });
+        }
+        $search = Input::get('search');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', "like", "%{$search}%");
+                $q->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $products = $query->paginate($perPage);
+        if ($search) {
+            $products->appends(['search' => $search]);
+        }
+
+        $user = $this->user;
+        $events = App\Event::where('channel_id', $channel->id)->get();
+        $categories = App\Category::all();
+        $category_name = array();
+        $id = array();
+        $name_en = array();
+        array_push($id, 1000);
+        array_push($name_en, "All");
+
+        foreach($categories as $category){
+            array_push($id, $category->id);
+            array_push($name_en, $category->name_en);
+        }
+
+        $category_name = array_combine($id, $name_en);
+        $channel = $this->channel;
+
+        return view('dashboard.channel.schedule', compact('products', 'events', 'categories', 'user', 'category_name', 'channel'));
     }
 }

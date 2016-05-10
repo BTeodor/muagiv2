@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('page-title', 'Products Management')
+@section('page-title', 'Bring your products to online tv')
 @section('page-header')
 <h1>
-Products
+Schedule
 </h1>
 <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> @lang('app.home')</a></li>
-    <li class="active">Products</li>
+    <li class="active">Schedule</li>
 </ol>
 @endsection
 @section('content')
@@ -56,24 +56,14 @@ Products
                         <tbody>
                             <tr>
                                 <th>Title</th>
-                                <th>Original link</th>
-                                <th>Regular Price</th>
-                                <th>New Price</th>
-                                <th>Status</th>
                                 <th>Image</th>
-                                <th>Video Link</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                             @if (count($products))
                             @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->title}}</td>
-                                <td>{{ $product->product_link}}</td>
-                                <td>{{ $product->old_price }}</td>
-                                <td>{{ $product->new_price }}</td>
-                                <td>{{ $product->deleted_at ? "Deleted" : "Active" }}</td>
                                 <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
-                                <td><a href="{{$product->video_link}}" title="{{$product->title}}">{{$product->video_link}}</a></td>
                                 <td class="text-center">
                                     <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
                                         title="Show product" data-toggle="tooltip" data-placement="top">

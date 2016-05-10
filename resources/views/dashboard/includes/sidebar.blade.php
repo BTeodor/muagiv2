@@ -38,6 +38,11 @@
                     <i class="fa fa-dashboard fa-fw"></i> <span>Products</span>
                 </a>
             </li>
+            <li class="{{ Ekko::isActiveRoute('dashboard') }}">
+                <a href="{{ route('channel.schedule.index') }}">
+                    <i class="fa fa-dashboard fa-fw"></i> <span>Live Schedule</span>
+                </a>
+            </li>
             @endif
             @permission('users.manage')
                 <li class="{{ Ekko::isActiveRoute('user.list') }}">

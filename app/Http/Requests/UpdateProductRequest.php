@@ -30,6 +30,7 @@ class UpdateProductRequest extends Request
             'image_link' => 'url',
             'product_link' => 'url',
             'old_price' => 'required',
+            'video_link' => 'url'
         ];
     }
 }

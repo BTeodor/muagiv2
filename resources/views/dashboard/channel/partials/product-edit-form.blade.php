@@ -50,6 +50,13 @@
         </div>
         @include('dashboard.channel.partials.category')
         <div class="row">
+            <div class="col-md-6">
+                <label for="video_link">Introduction video link</label>
+                <input type="text" class="form-control" id="video_link"
+                       name="video_link" placeholder="" value="{{$product->video_link}}">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description">Description</label>

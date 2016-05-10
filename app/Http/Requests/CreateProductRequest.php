@@ -29,7 +29,8 @@ class CreateProductRequest extends Request
             'image_file' => 'mimes:png,jpg,bmp,jpeg',
             'image_link' => 'url',
             'product_link' => 'url',
-            'old_price' => 'required'
+            'old_price' => 'required',
+            'video_link' => 'url'
         ];
     }
 }
