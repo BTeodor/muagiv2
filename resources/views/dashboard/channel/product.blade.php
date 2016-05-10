@@ -75,6 +75,10 @@ Products
                                 <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
                                 <td><a href="{{$product->video_link}}" title="{{$product->title}}">{{$product->video_link}}</a></td>
                                 <td class="text-center">
+                                    <a href="{{ route('channel.schedule.create', $product->id) }}" class="btn btn-success btn-circle"
+                                        title="Add schedule for this product" data-toggle="tooltip" data-placement="top">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                    </a>
                                     <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
                                         title="Show product" data-toggle="tooltip" data-placement="top">
                                         <i class="glyphicon glyphicon-eye-open"></i>

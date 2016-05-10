@@ -14,6 +14,8 @@ use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\CreateScheduleRequest;
+use App\Http\Requests\UpdateScheduleRequest;
 use Illuminate\Support\Facades\Input;
 use DB;
 class ChannelController extends Controller
@@ -353,7 +355,7 @@ class ChannelController extends Controller
         /**
          * generate product link
          */
-        $link = \URL::to('/').'/'.'product/'.$product->id;
+        $link = \URL::to('/').'/'.'product/'. $product->id;
         if (empty($request->product_link)) {
             $product->update(['product_link' => $link, 'auto_link' => $link]);
         }
@@ -389,7 +391,7 @@ class ChannelController extends Controller
                 }
             }
             $product->categories()->sync($list_category_id);
-    }
+        }
 
         /**
          * Add to event
@@ -434,32 +436,30 @@ class ChannelController extends Controller
         $channel = $this->channel;
         if ($channel == NULL) {
             $products == NULL;
-            return response()->json([
-                'status' => false
-            ]);
+            return redirect()->route('channel.details.create');
         }
         $perPage = 10;
-        $query = App\Products::query()->where('channel_id', $channel->id);
-        if (Input::get('category')) {
+        $clock = new App\ExternalClasses\MyClock();
+        $today = $clock->get_today_date_GMT_7("Y-m-d");
+        $utc_time_mark = $clock->get_unix_time_UTC_from_GMT_7("00:00", $today);
+        $query_schedule = App\Schedule::query()->where('start_time', '>=', $utc_time_mark);
+        if(Input::get('category')){
             if(Input::get('category') != 1000)
-            $query->whereIn('id', function($q){
+            $query_schedule->whereIn('product_id', function($q){
                 $q->select('product_id')->from('category_product')->where('category_id', Input::get('category'));  
             });
         }
-        $search = Input::get('search');
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', "like", "%{$search}%");
-                $q->orWhere('description', 'like', "%{$search}%");
+        if (Input::get('search')) {
+            $query_schedule->whereIn('product_id', function($q){
+                $q->select('id')->from('products')->where('title', "like", "%{Input::get('search')}%")->orWhere('description', 'like', "%{Input::get('search')}%");
             });
         }
-        $products = $query->paginate($perPage);
-        if ($search) {
-            $products->appends(['search' => $search]);
+        $schedules = $query_schedule->paginate($perPage);
+        if (Input::get('search')) {
+            $schedules->appends(['search' => Input::get('search')]);
         }
 
         $user = $this->user;
-        $events = App\Event::where('channel_id', $channel->id)->get();
         $categories = App\Category::all();
         $category_name = array();
         $id = array();
@@ -473,8 +473,31 @@ class ChannelController extends Controller
         }
 
         $category_name = array_combine($id, $name_en);
-        $channel = $this->channel;
+        return view('dashboard.channel.schedule', compact('schedules', 'categories', 'user', 'category_name', 'channel'));
+    }
 
-        return view('dashboard.channel.schedule', compact('products', 'events', 'categories', 'user', 'category_name', 'channel'));
+    public function createSchedule($product_id){
+        $clock = new App\ExternalClasses\MyClock();
+        $today = $clock->get_today_date_GMT_7("Y-m-d");
+        $product = App\Products::find($product_id);
+        return view('dashboard.channel.schedule.add', compact('product', 'today'));
+    }
+
+    public function storeSchedule(CreateScheduleRequest $request){
+        $data = $request->only('product_id', 'start_time', 'start_date', 'end_time', 'stream_link');
+
+        echo json_encode($data);
+    }
+
+    public function editSchedule(){
+
+    }
+
+    public function updateSchedule(){
+
+    }
+
+    public function deleteSchedule(){
+
     }
 }

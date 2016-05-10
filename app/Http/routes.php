@@ -60,7 +60,7 @@ Route::group(['middleware' => 'web'], function () {
 				'uses' => 'DashboardController@index',
 			]);
 
-			Route::group(['prefix' => 'channel'], function(){
+			Route::group(['prefix' => 'channel'], function() {
 				Route::get('test', function(){
 					$user = \Auth::user();
 					// $channel = $user->channel()->get()->toArray() [0];
@@ -150,6 +150,31 @@ Route::group(['middleware' => 'web'], function () {
 				Route::get('schedule/index', [
 					'as' => 'channel.schedule.index',
 					'uses' => 'ChannelController@indexSchedule'
+				]);
+
+				Route::get('schedule/{product_id}/create', [
+					'as' => 'channel.schedule.create',
+					'uses' => 'ChannelController@createSchedule'
+				]);
+
+				Route::post('schedule/store', [
+					'as' =>'channel.schedule.store',
+					'uses' => 'ChannelController@storeSchedule'
+				]);
+
+				Route::get('schedule/edit', [
+					'as' => 'channel.schedule.edit',
+					'uses' => 'ChannelController@editSchedule'
+				]);
+
+				Route::put('schedule/edit', [
+					'as' => 'channel.schedule.update',
+					'uses' => 'ChannelController@updateSchedule'
+				]);
+
+				Route::delete('schedule/{id}/delete', [
+					'as' => 'channel.schedule.delete', 
+					'uses' => 'ChannelController@deleteSchedule'
 				]);
 			});
 

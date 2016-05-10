@@ -33,7 +33,7 @@ Schedule
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                     @if (Input::has('search') && Input::get('search') != '')
-                        <a href="{{ route('channel.product.index') }}" class="btn btn-danger" type="button" >
+                        <a href="{{ route('channel.schedule.index') }}" class="btn btn-danger" type="button" >
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     @endif
@@ -48,7 +48,7 @@ Schedule
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List of products</h3>
+                <h3 class="box-title">Broadcasting Timetable</h3>
             </div>
             <div class="box-body table-responsive no-padding">
                 <div id="products-table-wrapper">
@@ -59,40 +59,20 @@ Schedule
                                 <th>Image</th>
                                 <th class="text-center">Action</th>
                             </tr>
-                            @if (count($products))
-                            @foreach ($products as $product)
+                            @if (count($schedules))
+                            @foreach ($schedules as $schedule)
                             <tr>
-                                <td>{{ $product->title}}</td>
-                                <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
+                                <td>{{ $schedule->product->title}}</td>
+                                <td><img src="{{ empty($schedule->product->relative_image_link) ? $schedule->product->image_link : asset($schedule->product->relative_image_link)}}" alt="{{$schedule->product->title}}" height="100px" width="100px"></td>
                                 <td class="text-center">
-                                    <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
+                                    <a href="{{ route('channel.product.show', $schedule->product->id) }}" class="btn btn-success btn-circle"
                                         title="Show product" data-toggle="tooltip" data-placement="top">
                                         <i class="glyphicon glyphicon-eye-open"></i>
                                     </a>
-                                    <a href="{{ route('channel.product.edit', $product->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
+                                    <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
                                         data-toggle="tooltip" data-placement="top">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
-                                    @if($product->deleted_at == NULL)
-                                    <a href="{{ route('channel.product.delete', $product->id) }}" class="btn btn-danger btn-circle" title="Delete product"
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        data-method="DELETE"
-                                        data-confirm-title="Please Confirm'"
-                                        data-confirm-text="Are you sure to delete this product"
-                                        data-confirm-delete="Yes, delete it">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                    @else
-                                    <a href="{{ route('channel.product.restore', $product->id) }}" class="btn btn-danger btn-circle" title="Restore product"
-                                        data-toggle="tooltip" data-placement="top"
-                                        data-method="DELETE"
-                                        data-confirm-title="Please Confirm'"
-                                        data-confirm-text="Are you sure to restore this product"
-                                        data-confirm-delete="Yes, restore it">
-                                        <i class="fa fa-refresh"></i>
-                                    </a>
-                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -103,7 +83,7 @@ Schedule
                             @endif
                         </tbody>
                     </table>
-                    {!! $products->render() !!}
+                    {!! $schedules->render() !!}
                 </div>
             </div>
         </div>
