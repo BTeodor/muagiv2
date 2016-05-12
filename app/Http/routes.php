@@ -580,9 +580,6 @@ Route::group(['prefix' => 'cron'], function(){
 Route::group(['middleware' => 'web'], function(){
 
 	Route::group(['prefix' => 'api/v2'], function(){
-		Route::get('test', function(){
-			echo "fuck";
-		});
 
 		Route::post('login', [
 			'as' => 'user.login',
@@ -639,6 +636,8 @@ Route::group(['middleware' => 'web'], function(){
 			'as' => 'channel.event.listProducts',
 			'uses' => 'Api\v2\EventController@listProducts'
 		]);
+
+		Route::get('category', 'Api\v2\CategoryController@index');
 	});
 
 });
