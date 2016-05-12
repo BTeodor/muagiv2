@@ -62,18 +62,24 @@ Products
                                 <th>Status</th>
                                 <th>Image</th>
                                 <th>Video Link</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                             @if (count($products))
                             @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->title}}</td>
-                                <td>{{ $product->product_link}}</td>
+                                <td><a href="{{ $product->product_link}}" title="{{ $product->title}}" target="_blank">{{ $product->product_link}}</a></td>
                                 <td>{{ $product->old_price }}</td>
                                 <td>{{ $product->new_price }}</td>
-                                <td>{{ $product->deleted_at ? "Deleted" : "Active" }}</td>
+                                <?php 
+
+                                if($product->deleted_at) 
+                                    echo('<td class="text-center"><p class="alert alert-danger alert-dismissible">Deleted</p></td>');
+                                else 
+                                    echo ('<td class="text-center"><p class="alert alert-success alert-dismissible">Active</p></td>');
+                                ?>
                                 <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
-                                <td><a href="{{$product->video_link}}" title="{{$product->title}}">{{$product->video_link}}</a></td>
+                                <td><a href="{{$product->video_link}}" title="{{$product->title}}" target="_blank">{{$product->video_link}}</a></td>
                                 <td class="text-center">
                                     <a href="{{ route('channel.schedule.create', $product->id) }}" class="btn btn-success btn-circle"
                                         title="Add schedule for this product" data-toggle="tooltip" data-placement="top">

@@ -44,17 +44,13 @@ class ProductController extends Controller
 
     public function showProduct($id){
         $product = Products::withTrashed()->where('id', $id)->first();
+        if ($product == NULL) {
+            return "Product does not exist";
+        }
+        $categories = $product->categories;
         $channel = $product->channel;
-        $event = $product->event;
+        $events = $product->events;
 
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'product' => $product,
-                'channel' => $channel,
-                'event' => $event
-            ]
-        ]);
-        return view('dashboard.channel.product.show', compact('product', 'channel', 'event'));
+        return view('dashboard.channel.product.show', compact('product', 'channel', 'events', 'categories'));
     }
 }

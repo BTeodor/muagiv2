@@ -24,6 +24,7 @@
             </div>
 
             @if ($edit && count($channel))
+                <input type="hidden" name="id" value="{{$channel->id}}"></input>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary" id="update-details-btn">
                         <i class="fa fa-refresh"></i>

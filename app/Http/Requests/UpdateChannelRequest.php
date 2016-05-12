@@ -25,8 +25,8 @@ class UpdateChannelRequest extends Request
     {
         return [
             //
-            'name' => 'required|unique:channels,name,'.$this->id.',id',
-            'homepage' => 'url'
+            'name' => 'required|unique:channels,name,'.$this->id,
+            'homepage' => 'url|unique:channels,homepage,'.$this->id,
         ];
     }
 }

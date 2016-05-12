@@ -25,7 +25,8 @@ class CreateScheduleRequest extends Request
     {
         return [
             //
-            'stream_link' => 'url'
+            'start_date' => 'date',
+            'stream_link' => 'active_url'
         ];
     }
 }

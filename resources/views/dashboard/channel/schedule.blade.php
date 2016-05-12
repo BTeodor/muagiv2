@@ -65,37 +65,39 @@ Schedule
                             </tr>
                             @if (count($schedules))
                             @foreach ($schedules as $schedule)
-                            <tr>
-                                <td>{{ $schedule->product()->title}}</td>
-                                <td><img src="{{ empty($schedule->product()->relative_image_link) ? $schedule->product()->image_link : asset($schedule->product()->relative_image_link)}}" alt="{{$schedule->product()->title}}" height="100px" width="100px"></td>
-                                <td>{{$schedule->start_date}}</td>
-                                <td>{{$schedule->available_time}}</td>
-                                <td>{{$schedule->stream_link}}</td>
-                                <td>
-                                    @if($current_time_hh_mm_GMT_7 < $schedule->start_time_string) 
-                                    Upcoming
-                                    @elseif($current_time_hh_mm_GMT_7 >= $schedule->start_time_string && $current_time_hh_mm_GMT_7 <= $schedule->end_time_string)
-                                    On-Air
-                                    @else
-                                    Off-Air
-                                    @endif
-                                </td>
-                                <td class="text-center">
-                                    <a href="{{ route('channel.schedule.delete', $schedule->id) }}" class="btn btn-danger btn-circle" title="Delete Schedule"
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        data-method="DELETE"
-                                        data-confirm-title="Please Confirm'"
-                                        data-confirm-text="Are you sure to delete this schedule"
-                                        data-confirm-delete="Yes, delete it">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                    <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
-                                        data-toggle="tooltip" data-placement="top">
-                                        <i class="glyphicon glyphicon-edit"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                @if($schedule->product() != NULL)
+                                <tr>
+                                    <td>{{ $schedule->product()->title}}</td>
+                                    <td><img src="{{ empty($schedule->product()->relative_image_link) ? $schedule->product()->image_link : asset($schedule->product()->relative_image_link)}}" alt="{{$schedule->product()->title}}" height="100px" width="100px"></td>
+                                    <td>{{$schedule->start_date}}</td>
+                                    <td>{{$schedule->available_time}}</td>
+                                    <td>{{$schedule->stream_link}}</td>
+                                    <td>
+                                        @if($utc_current_time < $schedule->start_time) 
+                                        Upcoming
+                                        @elseif($utc_current_time >= $schedule->start_time && $utc_current_time <= $schedule->end_time)
+                                        On-Air
+                                        @else
+                                        Off-Air
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('channel.schedule.delete', $schedule->id) }}" class="btn btn-danger btn-circle" title="Delete Schedule"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            data-method="DELETE"
+                                            data-confirm-title="Please Confirm'"
+                                            data-confirm-text="Are you sure to delete this schedule"
+                                            data-confirm-delete="Yes, delete it">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                        <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
+                                            data-toggle="tooltip" data-placement="top">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endif
                             @endforeach
                             @else
                             <tr>

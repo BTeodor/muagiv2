@@ -25,4 +25,19 @@ class CategoryController extends Controller
 			'data' => $categories
 		]);
     }
+
+    public function indexProduct($id){
+        $category = App\Category::find($id);
+        if ($category == NULL || count($category->products) == 0) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'Empty']
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $category->products
+        ]);
+    }
 }

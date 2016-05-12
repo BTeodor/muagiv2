@@ -13,7 +13,7 @@ class UpdateScheduleRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class UpdateScheduleRequest extends Request
     {
         return [
             //
+            'start_date' => 'date',
+            'stream_link' => 'active_url'
         ];
     }
 }

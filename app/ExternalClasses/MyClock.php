@@ -35,5 +35,12 @@ class MyClock{
 			return -1;
 		}
 	}
+
+	public function get_current_utc_time(){
+		$current_time_hh_mm_GMT_7 = $this->get_current_time_GMT_7("H:i");
+		$today = $this->get_today_date_GMT_7("Y-m-d");
+		$utc_current_time = $this->get_unix_time_UTC_from_GMT_7($current_time_hh_mm_GMT_7, $today);
+		return $utc_current_time;
+	}
 }
 ?>

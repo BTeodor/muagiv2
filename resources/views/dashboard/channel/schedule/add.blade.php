@@ -23,11 +23,8 @@
 {!! Form::close() !!}
 <script type="text/javascript">
     $(function(){
-        $('#datetimepicker1').datetimepicker({
-            format: 'hh:mm'
-        });
-        $('#datetimepicker2').datetimepicker({
-            format: 'hh:mm'
+        $('#start_time , #end_time').datetimepicker({
+        format: 'HH:mm',  
         });
     });
 </script>

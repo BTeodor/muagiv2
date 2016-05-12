@@ -162,7 +162,7 @@ Route::group(['middleware' => 'web'], function () {
 					'uses' => 'ChannelController@storeSchedule'
 				]);
 
-				Route::get('schedule/edit', [
+				Route::get('schedule/{schedule_id}/edit', [
 					'as' => 'channel.schedule.edit',
 					'uses' => 'ChannelController@editSchedule'
 				]);
@@ -460,9 +460,9 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
-Route::get('/', function(){
+Route::get('/', ['as' => '/', function(){
 	return view('homepage');
-});
+}]);
 
 Route::group(['prefix' => 'api/v1'], function(){
 	Route::get('products', function (){
@@ -638,6 +638,7 @@ Route::group(['middleware' => 'web'], function(){
 		]);
 
 		Route::get('category', 'Api\v2\CategoryController@index');
+		Route::get('category/{id}', 'Api\v2\CategoryController@indexProduct');
 	});
 
 });

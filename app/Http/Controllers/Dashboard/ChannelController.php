@@ -429,6 +429,18 @@ class ChannelController extends Controller
         return redirect()->route('channel.product.index')->withSuccess('Successfully restored');
     }
 
+    public function showProduct($id){
+        $product = App\Products::withTrashed()->where('id', $id)->first();
+        if ($product == NULL) {
+            return "Product does not exist";
+        }
+        $categories = $product->categories;
+        $channel = $product->channel;
+        $events = $product->events;
+
+        return view('dashboard.channel.product.show', compact('product', 'channel', 'events', 'categories'));
+    }
+
     /**
      * For schedule controller
      */
@@ -443,6 +455,7 @@ class ChannelController extends Controller
         $today = $clock->get_today_date_GMT_7("Y-m-d");
         $utc_time_mark = $clock->get_unix_time_UTC_from_GMT_7("00:00", $today);
         $current_time_hh_mm_GMT_7 = $clock->get_current_time_GMT_7("H:i");
+        $utc_current_time = $clock->get_current_utc_time();
         $query_schedule = App\Schedule::query()->where('start_time', '>=', $utc_time_mark);
         if(Input::get('category')){
             if(Input::get('category') != 1000)
@@ -475,7 +488,7 @@ class ChannelController extends Controller
         }
 
         $category_name = array_combine($id, $name_en);
-        return view('dashboard.channel.schedule', compact('schedules', 'categories', 'user', 'category_name', 'channel', 'current_time_hh_mm_GMT_7'));
+        return view('dashboard.channel.schedule', compact('schedules', 'categories', 'user', 'category_name', 'channel', 'utc_current_time'));
     }
 
     public function createSchedule($product_id){
@@ -514,12 +527,45 @@ class ChannelController extends Controller
         return redirect()->route('channel.schedule.index')->withSuccess('Successfully added schedule');
     }
 
-    public function editSchedule(UpdateScheduleRequest $request){
+    public function editSchedule($schedule_id){
+        $clock = new App\ExternalClasses\MyClock();
+        $today = $clock->get_today_date_GMT_7("Y-m-d");
+        $schedule = App\Schedule::find($schedule_id);
 
+        if ($schedule == NULL) {
+            return redirect()->back()->withErrors('Schedule id not found');
+        }
+
+        return view('dashboard.channel.schedule.edit', compact('schedule', 'today'));
     }
 
-    public function updateSchedule(){
+    public function updateSchedule(UpdateScheduleRequest $request){
+        $schedule = App\Schedule::find($request->schedule_id);
 
+        if ($schedule == NULL) {
+            return redirect()->back()->withErrors('Schedule id not found');
+        }
+        $start_time_string = $request->start_time_string;
+        $end_time_string = $request->end_time_string;
+        $start_date = $request->start_date;
+        $stream_link = $request->stream_link;
+        $available_time = $start_time_string . "-" . $end_time_string;
+
+        $clock = new App\ExternalClasses\MyClock();
+        $start_time = $clock->get_unix_time_UTC_from_GMT_7($start_time_string, $start_date);
+        $end_time = $clock->get_unix_time_UTC_from_GMT_7($end_time_string, $start_date);
+        $myErrors = array();
+        if ($start_time > $end_time) {
+            return redirect()->back()->withErrors('Start time must be sooner than end time');
+        }
+
+        $ifExist = App\Schedule::where('product_id', $schedule->product_id)->where('start_date', $start_date)->where('start_time', $start_time)->where('end_time', $end_time)->first();
+
+        if (count($ifExist)) {
+            return redirect()->back()->withErrors('The same schedule already exists');
+        }
+        $data = ['start_time' => $start_time, 'end_time' => $end_time, 'start_time_string' => $start_time_string, 'end_time_string' => $end_time_string, 'available_time' => $available_time, 'start_date' => $start_date, 'stream_link' => $stream_link];
+        return json_encode($data);
     }
 
     public function deleteSchedule($id){
