@@ -69,7 +69,7 @@ Products
                             <tr>
                                 <td>{{ $product->title}}</td>
                                 <td><a href="{{ $product->product_link}}" title="{{ $product->title}}" target="_blank">{{ $product->product_link}}</a></td>
-                                <td>{{ $product->old_price }}</td>
+                                <td><strike>{{ $product->old_price }}</strike></td>
                                 <td>{{ $product->new_price }}</td>
                                 <?php 
 
@@ -86,7 +86,7 @@ Products
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </a>
                                     <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
-                                        title="Show product" data-toggle="tooltip" data-placement="top">
+                                        title="Quicklook" data-toggle="tooltip" data-placement="top">
                                         <i class="glyphicon glyphicon-eye-open"></i>
                                     </a>
                                     <a href="{{ route('channel.product.edit', $product->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"

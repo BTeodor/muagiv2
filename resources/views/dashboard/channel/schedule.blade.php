@@ -55,12 +55,12 @@ Schedule
                     <table class="table table-hover table-striped">
                         <tbody>
                             <tr>
-                                <th>Title</th>
+                                <th class="text-center">Title</th>
                                 <th>Image</th>
-                                <th>Start Date</th>
+                                <th>On-air Date</th>
                                 <th>On-air Time</th>
-                                <th>On-air Link</th>
-                                <th>Status</th>
+                                <th class="text-center">On-air Link</th>
+                                <th class="text-center">Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                             @if (count($schedules))
@@ -72,13 +72,13 @@ Schedule
                                     <td>{{$schedule->start_date}}</td>
                                     <td>{{$schedule->available_time}}</td>
                                     <td>{{$schedule->stream_link}}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if($utc_current_time < $schedule->start_time) 
-                                        Upcoming
+                                        <p class="alert alert-info alert-dismissible">Coming soon</p>
                                         @elseif($utc_current_time >= $schedule->start_time && $utc_current_time <= $schedule->end_time)
-                                        On-Air
+                                        <p class="alert alert-success alert-dismissible">On-air</p>
                                         @else
-                                        Off-Air
+                                        <p class="alert alert-danger alert-dismissible">Off-air</p>
                                         @endif
                                     </td>
                                     <td class="text-center">

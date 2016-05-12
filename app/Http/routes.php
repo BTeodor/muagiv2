@@ -536,44 +536,30 @@ Route::group(['prefix' => 'cron'], function(){
 			$image_link = $product->ori_url;
 			$video_link = "rtmp://vtsstr6.sctv.vn/colive";
 			$link_to_crawl = $baseURL.($product->scjurl);
-			$old_price = $product->basic_price;
-			$new_price = $product->marketprice;
+			$old_price = $product->marketprice;
+			$new_price = $product->basic_price;
 			list($gmt7_start_time, $gmt7_end_time) = explode("-", $available_time);
 			$start_time = $clock->get_unix_time_UTC_from_GMT_7($gmt7_start_time, $start_date);
 			$end_time = $clock->get_unix_time_UTC_from_GMT_7($gmt7_end_time, $start_date);
 
 			//crawl mobile link for product code, and mobile link of product
-			$client = new Goutte\Client();
-			$crawler = $client->request('GET', $link_to_crawl);
-			$scj_code = $crawler->filterXPath('//div[contains(@class,"infoWrap") and contains(@class,"msp")]/span[@class="col2"]/text()')->text();
+			// $client = new Goutte\Client();
+			// $crawler = $client->request('GET', $link_to_crawl);
+			$scj_code = $product->item_code;
+			$scj_code = str_replace("2016", "", $scj_code);
 			$product_link = $mobileURL.trim($scj_code); //normalize
 
 			//crawl html string of description
-			$list_description = $crawler->filterXPath('//*[@id="scj_product_info"]//div[@class="info_wrap"]/*')->each(function($node, $i){
-				return $node->html();
-			});
-			$description = implode("", $list_description);
-			$item = App\Products::firstOrCreate(['title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today]);
+			// $list_description = $crawler->filterXPath('//*[@id="scj_product_info"]//div[@class="info_wrap"]/*')->each(function($node, $i){
+			// 	return $node->html();
+			// });
+			// $description = implode("", $list_description);
+			$item = ['title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today];
+
+			// $item = App\Products::firstOrCreate(['title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today]);
 			array_push($array, $item);
 		}
 		return Response::json($array);
-	});
-
-	Route::get('all', function(){ // crawl all products to save in database
-		/* For Lotte */
-		$lotte_baseURL = "http://lottedatviet.vn/index.do";
-
-
-		/* For SCJ */
-		$scj_baseURL = "http://www.scj.vn";
-		$scj_client = new Goutte\Client();
-		$scj_crawler = $scj_client->request('GET', $scj_baseURL);
-		$scj_category_domselector = '//*[contains(@class, "ilevel_0") or contains(@class, "ilevel_1")]/a/@href';
-		$cat_links = array();
-		$cat_links = $scj_crawler->filterXPath($scj_category_domselector)->each(function($node, $i){
-			return ['url' => "http://www.scj.vn".($node->text())];
-		});
-		echo json_encode($cat_links);
 	});
 });
 
@@ -639,14 +625,11 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::get('category', 'Api\v2\CategoryController@index');
 		Route::get('category/{id}', 'Api\v2\CategoryController@indexProduct');
+
+		Route::get('cron/scj', 'CronController@run');
+		Route::get('broadcast', 'Api\v2\ScheduleController@index');
 	});
 
-});
-
-Route::get('crawler', function(){
-	$client = new Goutte\Client();
-	$crawler = $client->request('GET', 'http://www.scj.vn');
-	echo $crawler->filterXPath('//title/text()')->text();
 });
 
 Route::group(['middleware' => 'web'], function(){
@@ -662,8 +645,3 @@ Route::group(['middleware' => 'web'], function(){
 });
 
 Route::get('product/{id}', 'Api\v2\ProductController@showProduct');
-
-Route::get('user/{id}', function($id){
-	$channel = App\User::find($id)->channel;
-	echo count($channel);
-});

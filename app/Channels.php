@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App;
 
 class Channels extends Model
 {
@@ -29,5 +30,13 @@ class Channels extends Model
 
     public function event(){
         return $this->hasMany('App\Event', 'channel_id');
+    }
+
+    public static function findIdByName($channel_name){
+        $channel = App\Channels::where('name', 'like', "%{$channel_name}%")->orWhere('logo', 'like', "%{$channel_name}%")->orWhere('homepage', 'like', "%{$channel_name}%")->first();
+        if ($channel == NULL) {
+            return -1;
+        }
+        return $channel->id;
     }
 }
