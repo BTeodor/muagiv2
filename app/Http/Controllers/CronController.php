@@ -65,7 +65,7 @@ class CronController extends Controller
             $image_link = $product->ori_url;
             $old_price = $product->marketprice;
             $new_price = $product->basic_price;
-            $video_link = "http://www.scj.vn/vi/broad-casting.html";
+            $video_link = NULL;
             $scj_code = $product->item_code;
             $scj_code = $this->normalizeCode($scj_code);
             $product_link = $mobileURL.trim($scj_code);
@@ -77,7 +77,7 @@ class CronController extends Controller
 
             /* For schedule */
             $product_id = $new_product->id;
-            $stream_link = "http://www.scj.vn/vi/broad-casting.html";
+            $stream_link = "rtmp://vtsstr6.sctv.vn/colive/C037_SD_2";
             $available_time = $product->scjtime;
             list($start_time_string, $end_time_string) = explode("-", $available_time);
             $start_time = $clock->get_unix_time_UTC_from_GMT_7($start_time_string, $start_date);
@@ -87,7 +87,7 @@ class CronController extends Controller
             $new_schedule = App\Schedule::firstOrCreate($schedule_detail);
             $new_schedule->update(['stream_link' => $stream_link]);
 
-            $data = ['id' => $new_product->id, 'title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today];
+            $data = ['id' => $new_product->id, 'title' => $title, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time];
 
             array_push($array, $data);
         }

@@ -31,7 +31,9 @@ class ScheduleController extends Controller
     public function index(){
         $clock = new MyClock();
         $today = $clock->get_today_date_GMT_7("Y-m-d");
+        $current_gmt7_time = $clock->get_current_time_GMT_7("H:i");
         $utc_time_mark = $clock->get_unix_time_UTC_from_GMT_7("00:00", $today);
+        $utc_current_time = $clock->get_unix_time_UTC_from_GMT_7($current_gmt7_time, $today);
         $array = array();
 
         $schedules = App\Schedule::where('start_time', '>=', $utc_time_mark)->get();
@@ -46,8 +48,8 @@ class ScheduleController extends Controller
         foreach ($schedules as $schedule) {
             $product_id = $schedule->product_id;
             $product = App\Products::find($product_id);
-            $item_type = $this->item_type($schedule->start_time, $schedule->end_time, $utc_time_mark);
-            $item = ['id' => $schedule->product_id, 'title' => $product->title, 'available_time' => $schedule->available_time, 'channel_id' => $product->channel_id, 'image_link' => $product->image_link, 'video_link' => $product->video_link, 'product_link' => $product->product_link, 'description' => $product->description, 'old_price' => $product->old_price, 'new_price' => $product->new_price, 'start_time' => $schedule->start_time, 'end_time' => $schedule->end_time, 'start_date' => $schedule->start_date, 'stream_link' => $schedule->stream_link, 'item_type' => $item_type];
+            $item_type = $this->item_type($schedule->start_time, $schedule->end_time, $utc_current_time);
+            $item = ['id' => $schedule->product_id, 'title' => $product->title, 'channel_id' => $product->channel_id, 'image_link' => $product->image_link, 'video_link' => $product->video_link, 'product_link' => $product->product_link, 'description' => $product->description, 'old_price' => $product->old_price, 'new_price' => $product->new_price, 'start_time' => $schedule->start_time, 'end_time' => $schedule->end_time, 'stream_link' => $schedule->stream_link, 'item_type' => $item_type];
 
             array_push($array, $item);
         }

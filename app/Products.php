@@ -14,7 +14,7 @@ class Products extends Model
     protected $table = 'products';
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'description', 'start_time', 'end_time', 'available_time', 'start_date', 'relative_image_link', 'auto_link'];
+    protected $fillable = ['title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'description', 'start_time', 'end_time', 'relative_image_link', 'auto_link'];
 
     public function channel(){
     	return $this->belongsTo('App\Channels', 'channel_id');

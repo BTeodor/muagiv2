@@ -99,7 +99,7 @@ class EventController extends Controller
         }
         $data = array();
         foreach ($list_id as $product_id) {
-            array_push($data, App\Products::where('id', $product_id)->get(array('id', 'title', 'video_link', 'product_link', 'channel_id', 'old_price', 'new_price', 'start_date', 'start_time', 'end_time', 'available_time', 'image_link')));
+            array_push($data, App\Products::where('id', $product_id)->get(array('id', 'title', 'video_link', 'product_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'image_link')));
         }
         return response()->json([
             'status' => true,
