@@ -88,6 +88,11 @@
             @endpermission
 
             @role('Admin')
+            <li class="{{ Ekko::isActiveRoute('category.list') }}">
+                <a href="{{ route('category.list') }}">
+                    <i class="fa fa-users fa-fw"></i> <span>Category management</span>
+                </a>
+            </li>
             <li class="{{ Ekko::isActiveMatch('log-viewer') }} treeview">
                 <a href="#">
                 	<i class="fa fa-file-text-o fa-fw"></i>

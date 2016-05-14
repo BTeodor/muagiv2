@@ -194,7 +194,7 @@ class ChannelController extends Controller
     			'status' => false
     		]);
     	}
-        $perPage = 10;
+        $perPage = 100;
         $query = App\Products::query()->withTrashed()->where('channel_id', $channel->id);
         if (Input::get('category')) {
             if(Input::get('category') != 1000)
@@ -450,7 +450,7 @@ class ChannelController extends Controller
             $products == NULL;
             return redirect()->route('channel.details.create');
         }
-        $perPage = 10;
+        $perPage = 100;
         $clock = new App\ExternalClasses\MyClock();
         $today = $clock->get_today_date_GMT_7("Y-m-d");
         $utc_time_mark = $clock->get_unix_time_UTC_from_GMT_7("00:00", $today);
@@ -469,7 +469,7 @@ class ChannelController extends Controller
                 $q->select('id')->from('products')->where('title', "like", "%{$search}%")->orWhere('description', 'like', "%{$search}%");
             });
         }
-        $schedules = $query_schedule->paginate($perPage);
+        $schedules = $query_schedule->orderBy('start_time', 'asc')->paginate($perPage);
         if (Input::get('search')) {
             $schedules->appends(['search' => Input::get('search')]);
         }

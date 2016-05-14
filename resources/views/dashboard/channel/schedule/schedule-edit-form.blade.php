@@ -19,24 +19,24 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                <label for="start_time_string">Start Time</label>
+                <label for="start_time_string"><span title="GMT+7">Start Time</span></label>
                     <div class="input-group date" id="start_time">
                         <input type="text" class="form-control" id="start_time_string"
-                               name="start_time_string" required value="{{$schedule->start_time_string}}">
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
+                               name="start_time_string" required value="{{$schedule->start_time_string}}" title="GMT+7">
+                        <span class="input-group-addon" title="GMT+7">
+                        <span class="glyphicon glyphicon-calendar" title="GMT+7"></span>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="end_time_string">End Time</label>
+                    <label for="end_time_string"><span title="GMT+7">End Time</span></label>
                     <div class="input-group date" id="end_time">
                         <input type="text" class="form-control" id="end_time_string"
-                               name="end_time_string" required value="{{$schedule->end_time_string}}">
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
+                               name="end_time_string" required value="{{$schedule->end_time_string}}" title="GMT+7">
+                        <span class="input-group-addon" title="GMT+7">
+                        <span class="glyphicon glyphicon-calendar" title="GMT+7"></span>
                         </span>
                     </div>
                 </div>

@@ -233,6 +233,37 @@ Route::group(['middleware' => 'web'], function () {
 				'uses' => 'ProfileController@invalidateSession',
 			]);
 
+			Route::get('category', [
+				'as' => 'category.list',
+				'uses' => 'CategoryController@index'
+			]);
+
+			Route::get('category/create', [
+				'as' => 'category.create',
+				'uses' => 'CategoryController@create'
+			]);
+
+			Route::post('category/store', [
+				'as' => 'category.store',
+				'uses' => 'CategoryController@store'
+			]);
+
+			Route::get('category/{id}/edit', [
+				'as' => 'category.edit',
+				'uses' => 'CategoryController@edit'
+			]);
+
+			Route::delete('category/{id}/delete', [
+				'as' => 'category.delete',
+				'uses' => 'CategoryController@delete'
+			]);
+
+			Route::put('category/edit', [
+				'as' => 'category.update',
+				'uses' => 'CategoryController@update'
+			]);
+
+
 			Route::get('user', [
 				'as' => 'user.list',
 				'uses' => 'UsersController@index',
@@ -510,59 +541,6 @@ Route::group(['prefix' => 'api/v1'], function(){
 	});
 });
 
-Route::group(['prefix' => 'cron'], function(){
-	Route::get('products', function(){
-		$clock = new App\ExternalClasses\MyClock();
-		
-		$today = $clock->get_today_date_GMT_7("Y-m-d");
-		$nextDay = $clock->get_nextday_date_GMT_7("Y-m-d");
-
-		/* For SCJ channel*/
-		$baseURL = 'http://www.scj.vn';
-		$mobileURL = 'http://www.m.scj.vn/#/detail/';
-		$API_URL = "http://www.scj.vn/index.php?option=com_broadcasting&task=getEvent&lang=vi&type=day&start=".$today."&end=".$nextDay;
-		$json = file_get_contents($API_URL);
-		$responses = json_decode($json);
-		$start_date = $today;
-		$end_date = $nextDay;
-		$array = array();
-		$description = "";
-		
-		foreach ($responses as $product) {
-
-			$available_time = $product->scjtime;
-			$channel_id = 1;
-			$title = $product->product_name;
-			$image_link = $product->ori_url;
-			$video_link = "rtmp://vtsstr6.sctv.vn/colive";
-			$link_to_crawl = $baseURL.($product->scjurl);
-			$old_price = $product->marketprice;
-			$new_price = $product->basic_price;
-			list($gmt7_start_time, $gmt7_end_time) = explode("-", $available_time);
-			$start_time = $clock->get_unix_time_UTC_from_GMT_7($gmt7_start_time, $start_date);
-			$end_time = $clock->get_unix_time_UTC_from_GMT_7($gmt7_end_time, $start_date);
-
-			//crawl mobile link for product code, and mobile link of product
-			// $client = new Goutte\Client();
-			// $crawler = $client->request('GET', $link_to_crawl);
-			$scj_code = $product->item_code;
-			$scj_code = str_replace("2016", "", $scj_code);
-			$product_link = $mobileURL.trim($scj_code); //normalize
-
-			//crawl html string of description
-			// $list_description = $crawler->filterXPath('//*[@id="scj_product_info"]//div[@class="info_wrap"]/*')->each(function($node, $i){
-			// 	return $node->html();
-			// });
-			// $description = implode("", $list_description);
-			$item = ['title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today];
-
-			// $item = App\Products::firstOrCreate(['title' => $title, 'available_time' => $available_time, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time, 'start_date' => $today]);
-			array_push($array, $item);
-		}
-		return Response::json($array);
-	});
-});
-
 Route::group(['middleware' => 'web'], function(){
 
 	Route::group(['prefix' => 'api/v2'], function(){
@@ -628,6 +606,8 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::get('cron/scj', 'CronController@run');
 		Route::get('broadcast', 'Api\v2\ScheduleController@index');
+
+		Route::get('livetoday', 'Api\v2\ScheduleController@indexAll');
 	});
 
 });
