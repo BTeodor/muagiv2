@@ -48,7 +48,7 @@ Products
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List of products</h3>
+                <h3 class="box-title">Total {{$channel->countProduct()}} product(s). Current number of hot items: {{$channel->current_no_hot_product()}}. Maximum number of hot items: {{$channel->maximum_no_hot_product}}</h3>
             </div>
             <div class="box-body table-responsive no-padding">
                 <div id="products-table-wrapper">
@@ -57,6 +57,7 @@ Products
                             <tr>
                                 <th>No</th>
                                 <th>Title</th>
+                                <th>Top sell</th>
                                 <th>Original link</th>
                                 <th>Regular Price</th>
                                 <th>New Price</th>
@@ -72,6 +73,11 @@ Products
                                 <td>{{$i}}</td>
                                 <?php $i++;?>
                                 <td>{{ $product->title}}</td>
+                                <td>
+                                    @if($product->is_hot == 1) 
+                                    <input type="checkbox" checked disabled>
+                                    @endif
+                                </td>
                                 <td><a href="{{ $product->product_link}}" title="{{ $product->title}}" target="_blank">{{ $product->product_link}}</a></td>
                                 <td><strike>{{ $product->old_price }}</strike></td>
                                 <td>{{ $product->new_price }}</td>

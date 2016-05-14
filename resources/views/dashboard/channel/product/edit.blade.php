@@ -27,4 +27,7 @@
 @section('after-scripts-end')
     {!! Html::script('assets/js/profile.js') !!}
     {!! JsValidator::formRequest('App\Http\Requests\User\CreateUserRequest', '#user-form') !!}
+    <script type="text/javascript">
+        $("#switch").bootstrapSwitch();
+    </script>
 @stop

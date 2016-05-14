@@ -342,7 +342,7 @@ class ChannelController extends Controller
     public function updateProduct(UpdateProductRequest $request){
         $id = $request->product_id;
         $product = App\Products::withTrashed()->where('id', $id)->first();
-
+        $channel = $this->channel;
         $data = [
             'title' => $request->title,
             'old_price' => $request->old_price,
@@ -351,7 +351,19 @@ class ChannelController extends Controller
             'channel_id' => $this->channel->id,
             'video_link' => $request->video_link
         ];
+
+        $is_hot = $request->is_hot;
+        if ($is_hot != $product->is_hot_item()) {
+            if ($is_hot) {
+                if ($channel->current_no_hot_product() + 1 <= $channel->maximum_no_hot_product) {
+                    $product->update(['is_hot' => $is_hot]);
+                }
+                else return redirect()->back()->withErrors('The current number of hot positions exceeds your channel\'s maximum value. Please contact admin for this situation');
+            }
+            else $product->update(['is_hot' => $is_hot]);
+        }
         $product->update($data);
+
         /**
          * generate product link
          */

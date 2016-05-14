@@ -43,4 +43,13 @@ class Channels extends Model
     public function maximum_no_hot_product(){
         return $this->maximum_no_hot_product;
     }
+
+    public function current_no_hot_product(){
+        $count = App\Products::where('channel_id', $this->id)->where('is_hot', 1)->count();
+        return $count;
+    }
+
+    public function countProduct(){
+        return $this->products->count();
+    }
 }

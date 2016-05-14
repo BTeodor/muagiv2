@@ -17,6 +17,12 @@
         </div>
         <div class="row">
             <div class="col-md-6">
+                <input type="hidden" name="is_hot" value="0"></input>
+                <label>Hot product: <input type="checkbox" name="is_hot" value="1" data-on-text="Hot" data-off-text="Normal" data-size="mini" id="switch" {{ $product->is_hot ? 'checked' : ''}}></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="image_link">Image URL</label>
                     <input type="text" class="form-control" id="image_link"
