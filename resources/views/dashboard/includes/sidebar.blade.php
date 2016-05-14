@@ -90,7 +90,12 @@
             @role('Admin')
             <li class="{{ Ekko::isActiveRoute('category.list') }}">
                 <a href="{{ route('category.list') }}">
-                    <i class="fa fa-users fa-fw"></i> <span>Category management</span>
+                    <i class="fa fa-users fa-fw"></i> <span>Categories management</span>
+                </a>
+            </li>
+            <li class="{{ Ekko::isActiveRoute('channel.list') }}">
+                <a href="{{ route('adminchannel.channel.list') }}">
+                    <i class="fa fa-users fa-fw"></i> <span>Channels management</span>
                 </a>
             </li>
             <li class="{{ Ekko::isActiveMatch('log-viewer') }} treeview">

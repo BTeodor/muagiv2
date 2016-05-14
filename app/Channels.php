@@ -14,7 +14,7 @@ class Channels extends Model
     protected $table = 'channels';
     protected $dates = ['deleted_at'];
     // protected $dateFormat = 'U';
-    protected $fillable = ['name', 'logo', 'homepage', 'hotline', 'description', 'relative_logo_link', 'user_id'];
+    protected $fillable = ['name', 'logo', 'homepage', 'hotline', 'description', 'relative_logo_link', 'user_id', 'maximum_no_hot_product'];
 
     public function products(){
     	return $this->hasMany('App\Products', 'channel_id');
@@ -38,5 +38,9 @@ class Channels extends Model
             return -1;
         }
         return $channel->id;
+    }
+
+    public function maximum_no_hot_product(){
+        return $this->maximum_no_hot_product;
     }
 }

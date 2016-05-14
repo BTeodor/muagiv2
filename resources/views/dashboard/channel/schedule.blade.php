@@ -95,7 +95,7 @@ Schedule
                                             data-confirm-delete="Yes, delete it">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </a>
-                                        <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
+                                        <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit this schedule"
                                             data-toggle="tooltip" data-placement="top">
                                             <i class="glyphicon glyphicon-edit"></i>
                                         </a>

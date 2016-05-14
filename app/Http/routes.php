@@ -263,6 +263,27 @@ Route::group(['middleware' => 'web'], function () {
 				'uses' => 'CategoryController@update'
 			]);
 
+			Route::group(['prefix' => 'adminchannel'], function(){
+				Route::get('channel', [
+					'as' => 'adminchannel.channel.list',
+					'uses' => 'AdminChannel\ChannelController@index'
+				]);
+
+				Route::get('channel/{id}/edit', [
+					'as' => 'adminchannel.channel.edit',
+					'uses' => 'AdminChannel\ChannelController@edit'
+				]);
+
+				Route::delete('channel/{id}/delete', [
+					'as' => 'adminchannel.channel.delete',
+					'uses' => 'AdminChannel\ChannelController@delete'
+				]);
+
+				Route::put('channel/edit', [
+					'as' => 'adminchannel.channel.update',
+					'uses' => 'AdminChannel\ChannelController@update'
+				]);
+			});
 
 			Route::get('user', [
 				'as' => 'user.list',

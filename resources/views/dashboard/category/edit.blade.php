@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('page-title', 'Create new category')
+@section('page-title', 'Update category details')
 
 @section('page-header')
     <h1>
