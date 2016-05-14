@@ -131,7 +131,7 @@ class ChannelController extends Controller
     	$channel = $this->channel;
 
     	if ($channel == NULL) {
-    		$events = NULL;
+    		return redirect()->route('channel.details.create');
     	}
     	$user = $this->user;
     	
@@ -189,10 +189,7 @@ class ChannelController extends Controller
     public function indexProduct(){
     	$channel = $this->channel;
     	if ($channel == NULL) {
-    		$products == NULL;
-    		return response()->json([
-    			'status' => false
-    		]);
+            return redirect()->route('channel.details.create');
     	}
         $perPage = 100;
         $query = App\Products::query()->withTrashed()->where('channel_id', $channel->id);
@@ -237,10 +234,7 @@ class ChannelController extends Controller
     public function createProduct(){
         $channel = $this->channel;
         if ($channel == NULL) {
-            $products == NULL;
-            return response()->json([
-                'status' => false
-            ]);
+            return redirect()->route('channel.details.create');
         }
         $channel = $this->channel;
         $user = $this->user;
@@ -459,7 +453,6 @@ class ChannelController extends Controller
     public function indexSchedule(){
         $channel = $this->channel;
         if ($channel == NULL) {
-            $products == NULL;
             return redirect()->route('channel.details.create');
         }
         $perPage = 100;

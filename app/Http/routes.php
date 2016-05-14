@@ -629,6 +629,9 @@ Route::group(['middleware' => 'web'], function(){
 		Route::get('broadcast', 'Api\v2\ScheduleController@index');
 
 		Route::get('livetoday', 'Api\v2\ScheduleController@indexAll');
+
+		Route::get('keyword', 'Api\v2\KeywordController@index');
+		Route::get('keyword/autocomplete', 'Api\v2\KeywordController@autocomplete');
 	});
 
 });

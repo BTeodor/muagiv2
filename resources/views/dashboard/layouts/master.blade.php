@@ -24,7 +24,9 @@
         <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/css/bootstrap-switch.min.css')}}" />
         <link rel="stylesheet" href="{{asset('bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}" />
+        <script src="{{asset('assets/js/jquery.tagsinput.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('assets/js/bootstrap-switch.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.tagsinput.min.css')}}" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
