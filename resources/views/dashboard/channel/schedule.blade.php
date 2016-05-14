@@ -55,6 +55,7 @@ Schedule
                     <table class="table table-hover table-striped">
                         <tbody>
                             <tr>
+                                <th>No</th>
                                 <th class="text-center">Title</th>
                                 <th>Image</th>
                                 <th>On-air Date</th>
@@ -64,9 +65,12 @@ Schedule
                                 <th class="text-center">Action</th>
                             </tr>
                             @if (count($schedules))
+                            <?php $i = 1?>
                             @foreach ($schedules as $schedule)
                                 @if($schedule->product() != NULL)
                                 <tr>
+                                    <td>{{$i}}</td>
+                                    <?php $i++;?>
                                     <td>{{ $schedule->product()->title}}</td>
                                     <td><img src="{{ empty($schedule->product()->relative_image_link) ? $schedule->product()->image_link : asset($schedule->product()->relative_image_link)}}" alt="{{$schedule->product()->title}}" height="100px" width="100px"></td>
                                     <td>{{$schedule->start_date}}</td>

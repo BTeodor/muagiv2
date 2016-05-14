@@ -55,6 +55,7 @@ Products
                     <table class="table table-hover table-striped">
                         <tbody>
                             <tr>
+                                <th>No</th>
                                 <th>Title</th>
                                 <th>Original link</th>
                                 <th>Regular Price</th>
@@ -65,8 +66,11 @@ Products
                                 <th class="text-center">Action</th>
                             </tr>
                             @if (count($products))
+                            <?php $i = 1?>
                             @foreach ($products as $product)
                             <tr>
+                                <td>{{$i}}</td>
+                                <?php $i++;?>
                                 <td>{{ $product->title}}</td>
                                 <td><a href="{{ $product->product_link}}" title="{{ $product->title}}" target="_blank">{{ $product->product_link}}</a></td>
                                 <td><strike>{{ $product->old_price }}</strike></td>
