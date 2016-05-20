@@ -65,6 +65,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+        $('#start_time , #end_time').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: new Date('2016-01-01'),
+        });
+    });
+</script>
 @stop
 
 @section('after-scripts-end')
