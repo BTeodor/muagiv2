@@ -35,7 +35,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        $products = $category->products;
+        $products = collect($category->products)->sortByDesc('updated_at');
         $array = array();
         foreach ($products as $product) {
             $item = collect($product)->merge(['stream_link' => NULL]);

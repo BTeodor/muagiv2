@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App;
+use DB;
 class EventController extends Controller
 {
     //
@@ -68,7 +69,7 @@ class EventController extends Controller
      * @param $request
      */
     public function index(){
-    	$events = App\Event::all();
+    	$events = App\Event::orderBy('updated_at', 'desc')->get();
 
     	if (count($events) == 0) {
     		return response()->json([
