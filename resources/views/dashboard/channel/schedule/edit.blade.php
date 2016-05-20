@@ -26,6 +26,9 @@
         $('#start_time, #end_time').datetimepicker({
             format: 'HH:mm', 
         });
+        $('#start_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+        });
     });
 </script>
 @stop

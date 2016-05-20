@@ -570,7 +570,8 @@ class ChannelController extends Controller
             return redirect()->back()->withErrors('The same schedule already exists');
         }
         $data = ['start_time' => $start_time, 'end_time' => $end_time, 'start_time_string' => $start_time_string, 'end_time_string' => $end_time_string, 'available_time' => $available_time, 'start_date' => $start_date, 'stream_link' => $stream_link];
-        return json_encode($data);
+        $schedule->update($data);
+        return redirect()->route('channel.schedule.index')->withSuccess('Successfully updated schedule');
     }
 
     public function deleteSchedule($id){

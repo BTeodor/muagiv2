@@ -42,9 +42,16 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <label for="start_date">Start date</label>
-                <input type="date" class="form-control" id="start_date"
-                       name="start_date" required min="{{$today}}">
+                <div class="form-group">
+                    <label for="start_date"><span title="GMT+7">Start Date</span></label>
+                    <div class="input-group date" id="start_date">
+                        <input type="text" class="form-control"
+                               name="start_date" required title="GMT+7">
+                        <span class="input-group-addon" title="GMT+7">
+                        <span class="glyphicon glyphicon-calendar" title="GMT+7"></span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
