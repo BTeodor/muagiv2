@@ -624,6 +624,7 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::get('category', 'Api\v2\CategoryController@index');
 		Route::get('category/{id}', 'Api\v2\CategoryController@indexProduct');
+		Route::get('category/{id}/onair', 'Api\v2\CategoryController@indexOnAirProduct');
 
 		Route::get('cron/scj', 'CronController@run');
 		Route::get('broadcast', 'Api\v2\ScheduleController@index');

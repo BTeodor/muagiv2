@@ -97,9 +97,10 @@ class EventController extends Controller
         foreach ($event->products as $product) {
             array_push($list_id, $product->pivot->product_id);
         }
+
         $data = array();
         foreach ($list_id as $product_id) {
-            array_push($data, App\Products::where('id', $product_id)->get(array('id', 'title', 'video_link', 'product_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'image_link')));
+            array_push($data, collect(App\Products::find($product_id))->merge(['stream_link' => NULL]));
         }
         return response()->json([
             'status' => true,
