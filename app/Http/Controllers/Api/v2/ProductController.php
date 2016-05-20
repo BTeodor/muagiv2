@@ -21,11 +21,15 @@ class ProductController extends Controller
     public function searchByProductName(Request $request){
     	if (isset($request->keyword)) {
     		$keyword = $request->keyword;
-    		$products = Products::where('title', 'like', "%{$keyword}%")->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price'));
+    		$products = Products::where('title', 'like', "%{$keyword}%")->get();
     		if (count($products) > 0) {
+                $array = array();
+                foreach ($products as $product) {
+                    array_push($array, collect($product)->merge(['stream_link' => NULL]));
+                }
     			return response()->json([
     				'status' => 200,
-    				'data' => $products
+    				'data' => $array
     			]);
     		}
     		return response()->json([
@@ -50,5 +54,23 @@ class ProductController extends Controller
         $events = $product->events;
 
         return view('dashboard.channel.product.show', compact('product', 'channel', 'events', 'categories'));
+    }
+
+    public function hotItem(){
+        $products = Products::where('is_hot', 1)->get();
+        if (count($products) == 0) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'Empty']
+            ]);
+        }
+        $array = array();
+        foreach ($products as $product) {
+            array_push($array, collect($product)->merge(['stream_link' => NULL]));
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $array
+        ]);
     }
 }

@@ -633,6 +633,8 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::get('keyword', 'Api\v2\KeywordController@index');
 		Route::get('keyword/autocomplete', 'Api\v2\KeywordController@autocomplete');
+
+		Route::get('hot', 'Api\v2\ProductController@hotItem');
 	});
 
 });

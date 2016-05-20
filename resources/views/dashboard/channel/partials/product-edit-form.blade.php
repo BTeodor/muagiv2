@@ -66,7 +66,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" class="form-control" id="description" placeholder="">{{ $product->description }}</textarea>
+                    <textarea name="description" rows="15" class="form-control" id="description" placeholder="">{{ $product->description }}</textarea>
                     <input type="hidden" name="product_id" value="{{$product->id}}"></input>
                 </div>
             </div>

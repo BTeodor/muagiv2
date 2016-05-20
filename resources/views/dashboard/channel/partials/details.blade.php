@@ -16,13 +16,17 @@
                     <input type="text" class="form-control" id="hotline"
                            name="hotline" placeholder="" value="{{ $edit && count($channel) ? $channel['hotline'] : '' }}">
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description"
-                           name="description" placeholder="" value="{{ $edit && count($channel) ? $channel['description'] : '' }}">
+                    <textarea name="description" rows="10" class="form-control" id="description">{{ $edit && count($channel) ? $channel['description'] : '' }}</textarea>
                 </div>
             </div>
-
+        </div>
+        <div class="row">
             @if ($edit && count($channel))
                 <input type="hidden" name="id" value="{{$channel->id}}"></input>
                 <div class="col-md-12">

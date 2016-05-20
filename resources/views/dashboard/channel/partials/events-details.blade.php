@@ -35,7 +35,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" class="form-control" id="description" placeholder="" value="">{{ $event->description}}</textarea>
+                    <textarea name="description" rows="9" class="form-control" id="description" placeholder="" value="">{{ $event->description}}</textarea>
                 </div>
                 <input type="hidden" name="id" value="{{ $event->id }}"></input>
                 <input type="hidden" name="channel_id" value="{{ $channel->id }}"></input>
