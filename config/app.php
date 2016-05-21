@@ -173,6 +173,7 @@ return [
 		Laravelista\Ekko\EkkoServiceProvider::class,
 		Arcanedev\Localization\LocalizationServiceProvider::class,
 		Arcanedev\LogViewer\LogViewerServiceProvider::class,
+		Barryvdh\Debugbar\ServiceProvider::class,
 	],
 
 	/*
@@ -230,7 +231,7 @@ return [
 		'Settings' => anlutro\LaravelSettings\Facade::class,
 		'Authy' => App\Services\Auth\TwoFactor\Facade::class,
 		'Ekko' => Laravelista\Ekko\Facades\Ekko::class,
-
+		'Debugbar' => Barryvdh\Debugbar\Facade::class,
 	],
 
 ];

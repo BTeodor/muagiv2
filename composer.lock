@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "60df26bdbedafbbefa346cb774ae8e95",
-    "content-hash": "4a91b3dac14bbfe39afd3744bb30f0ab",
+    "hash": "32295287c4c1e2b03cf853469fcc76f0",
+    "content-hash": "a630db714c1eadbd89881a18aab72770",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -281,6 +281,60 @@
                 "support"
             ],
             "time": "2016-04-17 18:12:30"
+        },
+        {
+            "name": "barryvdh/laravel-debugbar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-debugbar.git",
+                "reference": "6f108313617315923f86e89a522ff5f547f5e5c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/6f108313617315923f86e89a522ff5f547f5e5c7",
+                "reference": "6f108313617315923f86e89a522ff5f547f5e5c7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*|5.2.*",
+                "maximebf/debugbar": "~1.11.0|~1.12.0",
+                "php": ">=5.5.9",
+                "symfony/finder": "~2.7|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\Debugbar\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "PHP Debugbar integration for Laravel",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "laravel",
+                "profiler",
+                "webprofiler"
+            ],
+            "time": "2016-05-18 08:35:04"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -691,7 +745,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3df22ccdf20a68fafe34cb1ae452aee7cde7d442",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1c6f63dff60f1f8c073087833edae2da96d37287",
                 "reference": "3df22ccdf20a68fafe34cb1ae452aee7cde7d442",
                 "shasum": ""
             },
@@ -762,7 +816,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/803a2ed9fea02f9ca47cd45395089fe78769a392",
                 "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
                 "shasum": ""
             },
@@ -932,7 +986,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Exceptions/zipball/91eacead72ec6c02bb231e3ed401bc228271fa74",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Exceptions/zipball/bbf6af6ad7150e9562bd97886a1b1d1f29d37957",
                 "reference": "91eacead72ec6c02bb231e3ed401bc228271fa74",
                 "shasum": ""
             },
@@ -1143,7 +1197,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7011740238e3468486889c194f209bba51118f95",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b1a96f6134f69cb41f8538d3a6491f4bb1dbab78",
                 "reference": "7011740238e3468486889c194f209bba51118f95",
                 "shasum": ""
             },
@@ -1521,7 +1575,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/2ccedb67bd45eb09bd041872a0f77eb6722fb6e3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/5498133f8654f8d8ddc2a398f970fa2e5c486c7b",
                 "reference": "2ccedb67bd45eb09bd041872a0f77eb6722fb6e3",
                 "shasum": ""
             },
@@ -1650,7 +1704,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/38193be348affd74cd259b3d52059290fafc9990",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/c6f767b56117fba88b65a5561be8d1cf98f0518a",
                 "reference": "38193be348affd74cd259b3d52059290fafc9990",
                 "shasum": ""
             },
@@ -1704,7 +1758,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/02c75dff24fa9c306a907816ee6cff8c85a0d96b",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/4d5ed8a59a436dff1ee50ca8281ab4092fabcb73",
                 "reference": "02c75dff24fa9c306a907816ee6cff8c85a0d96b",
                 "shasum": ""
             },
@@ -1801,7 +1855,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/94294e4b9feec0b9a126d729812eb411ec7b577d",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9546fa1c3e8f1fe21f6f51a46c89be268a6171f1",
                 "reference": "94294e4b9feec0b9a126d729812eb411ec7b577d",
                 "shasum": ""
             },
@@ -1938,6 +1992,67 @@
             "time": "2015-10-23 04:02:07"
         },
         {
+            "name": "maximebf/debugbar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
+                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/log": "^1.0",
+                "symfony/var-dumper": "^2.6|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.12-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "time": "2016-05-15 13:11:34"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.x-dev",
             "source": {
@@ -1947,7 +2062,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/b23ddb363f28b41d790744197c4cf71e3fdccfe4",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ba9d57a96b3a2499599b2ca93a32f3ed955b269c",
                 "reference": "b23ddb363f28b41d790744197c4cf71e3fdccfe4",
                 "shasum": ""
             },
@@ -2442,7 +2557,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/68f50da0fdd6cb0146d17d6bde20b76e0e57e7fb",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/1460e98b53d2f916f1b4123069c96c90844a1a4d",
                 "reference": "68f50da0fdd6cb0146d17d6bde20b76e0e57e7fb",
                 "shasum": ""
             },
@@ -2495,7 +2610,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/b645a9b23d6c0eeba5ac823fa87bf010db9aff22",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/eac627df256e0ee7a7f9f5ca7d77218858cc6db9",
                 "reference": "b645a9b23d6c0eeba5ac823fa87bf010db9aff22",
                 "shasum": ""
             },
@@ -2552,7 +2667,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/34a214710e0714b6efcf40ba3cd1e31373a97820",
+                "url": "https://api.github.com/repos/symfony/console/zipball/c8471cf008b3a7b17a5b537838358f226b617dc3",
                 "reference": "34a214710e0714b6efcf40ba3cd1e31373a97820",
                 "shasum": ""
             },
@@ -2665,7 +2780,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/a06d10888a45afd97534506afb058ec38d9ba35b",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/a5f488faf136760ad6c478087e40b501473b8800",
                 "reference": "a06d10888a45afd97534506afb058ec38d9ba35b",
                 "shasum": ""
             },
@@ -2778,7 +2893,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0343b2cedd0edb26cdc791212a8eb645c406018b",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/6392bd019bda7e726e62acc019657b813c854d70",
                 "reference": "0343b2cedd0edb26cdc791212a8eb645c406018b",
                 "shasum": ""
             },
@@ -2838,7 +2953,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/c54e407b35bc098916704e9fd090da21da4c4f52",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/39e5f3d533d07b5416b9d7aad53a27f939d4f811",
                 "reference": "c54e407b35bc098916704e9fd090da21da4c4f52",
                 "shasum": ""
             },
@@ -2887,7 +3002,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/18b24bc32d2495ae79d76e777368786a6536fe31",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/7cb53fb8f6b8150dd07d9710922b21ba6bf6d90c",
                 "reference": "18b24bc32d2495ae79d76e777368786a6536fe31",
                 "shasum": ""
             },
@@ -2940,7 +3055,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/653ab4b2dced462a3a0f66307e5eb7c9054fcb49",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/80001c27501d33a46d2fff4f4615358612d87b1c",
                 "reference": "653ab4b2dced462a3a0f66307e5eb7c9054fcb49",
                 "shasum": ""
             },
@@ -3022,7 +3137,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6bab34bbffa5f5ac079fdc4a68e143f158e87b7d",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/dff51f72b0706335131b00a7f49606168c582594",
                 "reference": "6bab34bbffa5f5ac079fdc4a68e143f158e87b7d",
                 "shasum": ""
             },
@@ -3081,7 +3196,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/4d891fff050101a53a4caabb03277284942d1ad9",
+                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/3edf57a8fbf9a927533344cef65ad7e1cf31030a",
                 "reference": "4d891fff050101a53a4caabb03277284942d1ad9",
                 "shasum": ""
             },
@@ -3137,7 +3252,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
+                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/ef830ce3d218e622b221d6bfad42c751d974bf99",
                 "reference": "8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
                 "shasum": ""
             },
@@ -3238,7 +3353,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/a6cd168310066176599442aa21f5da86c3f8e0b3",
                 "reference": "6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
                 "shasum": ""
             },
@@ -3440,7 +3555,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/40c41acb79ed6fd6ddd8d5790c6ec8c777ce039f",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/c15a9457a6894b8180b56f79cd57ee8eae6d6bf3",
                 "reference": "40c41acb79ed6fd6ddd8d5790c6ec8c777ce039f",
                 "shasum": ""
             },
@@ -3725,7 +3840,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/123a68ff806be726d92e7db49eed3f36c881f099",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/df56110269ffaaea78295290c74d0bd1b3ac176f",
                 "reference": "123a68ff806be726d92e7db49eed3f36c881f099",
                 "shasum": ""
             },
@@ -3940,7 +4055,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/80138299aadb590ce3fd0b75d30343fff9f8d0a8",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/7ca4182b3acbd19ebbf3ced4dfee12487d9c05aa",
                 "reference": "80138299aadb590ce3fd0b75d30343fff9f8d0a8",
                 "shasum": ""
             },
@@ -4242,7 +4357,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ac4dfb003d2d89e8f474fa15b0f9714ac1b45899",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fc1d8cd5b5de11625979125c5639347896ac2c74",
                 "reference": "ac4dfb003d2d89e8f474fa15b0f9714ac1b45899",
                 "shasum": ""
             },
@@ -4486,7 +4601,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4e8f0da10ac5802913afc151413bc8c53b6c2716",
                 "reference": "dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
                 "shasum": ""
             },
@@ -4742,7 +4857,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/407e31ad9742ace5c3d01642f02a3b2e6062bae5",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/641bbd0fc1b671f896f7815169587dced3588f5c",
                 "reference": "407e31ad9742ace5c3d01642f02a3b2e6062bae5",
                 "shasum": ""
             },

@@ -256,7 +256,7 @@ class ChannelController extends Controller
         $keywords = $request->keywords;
         $array_keyword = explode(',', $keywords);
         foreach ($array_keyword as $key) {
-            App\Keyword::insertIgnoreDuplicate($key);
+            App\Keyword::firstOrCreate(['keyword' =>$key]);
         }
 
     	$data = [
