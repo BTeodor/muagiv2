@@ -65,6 +65,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
+                    <label for="keywords">Keywords (Required)</label>
+                    <input type="text" class="form-control" id="keywords" placeholder="Keyword can be provider, sub-category of product, usage of product ..." value="<?php if(count(json_decode($product->json_keyword)) != 0) echo implode(",", json_decode($product->json_keyword)); ?>" name="keywords" required></input>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea name="description" rows="15" class="form-control" id="description" placeholder="">{{ $product->description }}</textarea>
                     <input type="hidden" name="product_id" value="{{$product->id}}"></input>

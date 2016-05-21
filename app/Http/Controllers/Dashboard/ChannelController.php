@@ -241,17 +241,32 @@ class ChannelController extends Controller
         $products = App\Products::where('channel_id', $channel->id)->get();
         $events = App\Event::where('channel_id', $channel->id)->get();
         $categories = App\Category::all();
-        return view('dashboard.channel.product.add', compact('products', 'events', 'categories', 'user', 'channel'));
+
+        $array = App\Keyword::all(['keyword'])->toArray();
+        $keywords = array();
+        foreach ($array as $key => $value) {
+            array_push($keywords, $value['keyword']);
+        }
+        return view('dashboard.channel.product.add', compact('products', 'events', 'categories', 'user', 'channel', 'keywords'));
     }
 
     public function storeProduct(CreateProductRequest $request){
+
+        /*Keyword processing - add new keywords to keyword table*/
+        $keywords = $request->keywords;
+        $array_keyword = explode(',', $keywords);
+        foreach ($array_keyword as $key) {
+            App\Keyword::insertIgnoreDuplicate($key);
+        }
+
     	$data = [
     		'title' => $request->title,
     		'old_price' => $request->old_price,
     		'new_price' => $request->new_price,
     		'description' => $request->description,
     		'channel_id' => $this->channel->id,
-            'video_link' => $request->video_link
+            'video_link' => $request->video_link,
+            'json_keyword' => json_encode($array_keyword)
     	];
 
     	$product = App\Products::firstOrCreate($data);
@@ -328,22 +343,35 @@ class ChannelController extends Controller
         $channel = $product->channel;
         $events = $this->channel->event;
         $chosen_events = $product->events;
-        // return response()->json($categories);
-        // return response()->json(['1' => count($categories), '2' => count($chosen_categories)]);
-        return view('dashboard.channel.product.edit', compact('product', 'events', 'channel', 'chosen_events', 'categories', 'chosen_categories'));
+
+        $array = App\Keyword::all(['keyword'])->toArray();
+        $keywords = array();
+        foreach ($array as $key => $value) {
+            array_push($keywords, $value['keyword']);
+        }
+
+        return view('dashboard.channel.product.edit', compact('product', 'events', 'channel', 'chosen_events', 'categories', 'chosen_categories', 'keywords'));
     }
 
     public function updateProduct(UpdateProductRequest $request){
         $id = $request->product_id;
         $product = App\Products::withTrashed()->where('id', $id)->first();
         $channel = $this->channel;
+
+        /*Keyword processing - add new keywords to keyword table*/
+        $keywords = $request->keywords;
+        $array_keyword = explode(',', $keywords);
+        foreach ($array_keyword as $key) {
+            App\Keyword::firstOrCreate(['keyword' =>$key]);
+        }
         $data = [
             'title' => $request->title,
             'old_price' => $request->old_price,
             'new_price' => $request->new_price,
             'description' => $request->description,
             'channel_id' => $this->channel->id,
-            'video_link' => $request->video_link
+            'video_link' => $request->video_link, 
+            'json_keyword' => json_encode($array_keyword)
         ];
 
         $is_hot = $request->is_hot;

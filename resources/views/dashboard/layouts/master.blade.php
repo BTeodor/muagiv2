@@ -24,9 +24,37 @@
         <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}" />
         <link rel="stylesheet" href="{{asset('assets/css/bootstrap-switch.min.css')}}" />
         <link rel="stylesheet" href="{{asset('bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}" />
-        <script src="{{asset('assets/js/jquery.tagsinput.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('assets/js/bootstrap-switch.js')}}"></script>
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.tagsinput.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery-ui.css')}}">
+        <script type="text/javascript" src="{{asset('assets/js/jquery-2.1.4.min.js')}}"></script>
+        <script type="text/javascript">
+            var $j214 = jQuery.noConflict();
+        </script>
+        <script src="{{asset('assets/js/jquery-ui.custom.min.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap-tokenfield.custom.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap-tokenfield.css')}}">
+        @if(isset($keywords))
+            <script type="text/javascript">
+                $(function(){
+                    var keywords = <?php echo '["' . implode('", "', $keywords) . '"]' ?>;
+                    console.log(keywords);
+                    $j214('#keywords').tokenfield({
+                      autocomplete: {
+                        source: keywords,
+                        delay: 100,
+                        minLength: 1
+                      },
+                      showAutocompleteOnFocus: true
+                    }).on('tokenfield:createtoken', function (event) {
+                        var existingTokens = $j214(this).tokenfield('getTokens');
+                        $j214.each(existingTokens, function(index, token) {
+                            if (token.value === event.attrs.value)
+                                event.preventDefault();
+                        });
+                    });
+                });
+            </script>
+        @endif
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
