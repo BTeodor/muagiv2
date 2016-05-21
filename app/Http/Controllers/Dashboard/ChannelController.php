@@ -204,6 +204,7 @@ class ChannelController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('title', "like", "%{$search}%");
                 $q->orWhere('description', 'like', "%{$search}%");
+                $q->orWhere('json_keyword', 'like', "%{$search}%");
             });
         }
         $products = $query->paginate($perPage);
@@ -266,7 +267,7 @@ class ChannelController extends Controller
     		'description' => $request->description,
     		'channel_id' => $this->channel->id,
             'video_link' => $request->video_link,
-            'json_keyword' => json_encode($array_keyword)
+            'json_keyword' => $keywords //json_encode($array_keyword)
     	];
 
     	$product = App\Products::firstOrCreate($data);
@@ -371,7 +372,7 @@ class ChannelController extends Controller
             'description' => $request->description,
             'channel_id' => $this->channel->id,
             'video_link' => $request->video_link, 
-            'json_keyword' => json_encode($array_keyword)
+            'json_keyword' => $keywords //json_encode($array_keyword)
         ];
 
         $is_hot = $request->is_hot;
@@ -499,7 +500,7 @@ class ChannelController extends Controller
         $search = Input::get('search');
         if (Input::get('search')) {
             $query_schedule->whereIn('product_id', function($q) use ($search){
-                $q->select('id')->from('products')->where('title', "like", "%{$search}%")->orWhere('description', 'like', "%{$search}%");
+                $q->select('id')->from('products')->where('title', "like", "%{$search}%")->orWhere('description', 'like', "%{$search}%")->orWhere('json_keyword', 'like', "%{$search}%");
             });
         }
         $schedules = $query_schedule->orderBy('start_time', 'asc')->paginate($perPage);

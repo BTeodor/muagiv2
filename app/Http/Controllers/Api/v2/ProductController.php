@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function searchByProductName(Request $request){
     	if (isset($request->keyword)) {
     		$keyword = $request->keyword;
-    		$products = Products::where('title', 'like', "%{$keyword}%")->get();
+    		$products = Products::where('title', 'like', "%{$keyword}%")->orWhere('description', 'like', "%{$keyword}%")->orWhere('json_keyword', 'like', "%{$keyword}%")->get();
     		if (count($products) > 0) {
                 $array = array();
                 foreach ($products as $product) {
@@ -71,6 +71,56 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'data' => $array
+        ]);
+    }
+
+    public function compare(Request $request){
+        if ($request->has('product_id')) {
+            $product_id = $request->only('product_id');
+            $product = Products::where('id', $product_id)->first();
+
+            if ($product == NULL) {
+                return response()->json([
+                    'status' => false,
+                    'data' => ['message' => "Product not found"]
+                ]);
+            }
+            $keyword_string = $product->json_keyword;
+
+            if ($keyword_string == "") {
+                return response()->json([
+                    'status' => false,
+                    'data' => ['message' => "Product cannot be compared because no keyword found"]
+                ]);
+            }
+
+            $keyword_array = explode(",", $keyword_string);
+
+            $array = array();
+            foreach ($keyword_array as $keyword) {
+                $products = Products::where('id', '<>', $product_id)->where('json_keyword', 'like', "%{$keyword}%")->orWhere('title', 'like', "%{$keyword}%")->get();
+                if($products->count() > 0) 
+                    foreach ($products as $product) {
+                        $channel_name = $product->channel->name;
+                        $product = collect($product)->merge(['from' => $channel_name]);
+                        if(!in_array($product, $array)) array_push($array, $product);
+                    }
+            }
+
+            if (count($array) == 0) {
+                return response()->json([
+                    'status' => false,
+                    'data' => ['message' => "Not found any similar product"]
+                ]);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => $array
+            ]);
+        }
+        return response()->json([
+            'status' => false,
+            'data' => ['message' => "Error"]
         ]);
     }
 }

@@ -66,7 +66,8 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="keywords">Keywords (Required)</label>
-                    <input type="text" class="form-control" id="keywords" placeholder="Keyword can be provider, sub-category of product, usage of product ..." value="<?php if(count(json_decode($product->json_keyword)) != 0) echo implode(",", json_decode($product->json_keyword)); ?>" name="keywords" required></input>
+                    <input type="text" class="form-control" id="keywords" placeholder="Keyword can be provider, sub-category of product, usage of product ..." value="{{$product->json_keyword}}" name="keywords" required></input>
+                    <?php //if(count(json_decode($product->json_keyword)) != 0) echo implode(",", json_decode($product->json_keyword)); ?>
                 </div>
             </div>
         </div>
