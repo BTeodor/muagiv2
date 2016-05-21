@@ -102,7 +102,7 @@ class ProductController extends Controller
                 if($products->count() > 0) 
                     foreach ($products as $product) {
                         $channel_name = $product->channel->name;
-                        $product = collect($product)->merge(['from' => $channel_name]);
+                        $product = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
                         if(!in_array($product, $array)) array_push($array, $product);
                     }
             }
