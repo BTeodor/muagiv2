@@ -11,32 +11,21 @@ use App;
 class FavoriteController extends Controller
 {
     //
-    public function post(Request $request){
+    public function create(Request $request){
     	if (!isset($request->user_id) || !isset($request->product_id)) {
-    		return Response::json([
+    		return response()->json([
     			'status' => false,
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
-    	// if(!\Auth::check()) { //not logged in
-     //        return response()->json([
-     //            'status' => false,
-     //            'data' => [
-     //                'message' => 'Don\'t have permisson'
-     //            ]
-     //        ], 403);
-     //    }
 
-     //    $user = \Auth::user(); //logged in
-     //    if($user->id != $request->user_id){
-     //        return response()->json([
-     //            'status' => false,
-     //            'data' => [
-     //                'message' => 'Don\'t have permisson'
-     //            ]
-     //        ], 403);
-     //    }
         $user = App\User::find($request->user_id);
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'User not found']
+            ]);
+        }
         if(!App\Products::find($request->product_id)) 
             return response()->json([
                 'status' => false,
@@ -64,32 +53,21 @@ class FavoriteController extends Controller
 
     public function delete(Request $request){
     	if (!isset($request->user_id) || !isset($request->product_id)) {
-    		return Response::json([
+    		return response()->json([
     			'status' => false,
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
 
-    	// if(!\Auth::check()) { //not logged in
-     //        return response()->json([
-     //            'status' => false,
-     //            'data' => [
-     //                'message' => 'Don\'t have permisson'
-     //            ]
-     //        ], 403);
-     //    }
-
-     //    $user = \Auth::user(); //logged in
-     //    if($user->id != $request->user_id){
-     //        return response()->json([
-     //            'status' => false,
-     //            'data' => [
-     //                'message' => 'Don\'t have permisson'
-     //            ]
-     //        ], 403);
-     //    }
         $user = App\User::find($request->user_id);
 
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'User not found']
+            ]);
+        }
+        
         if(!App\Products::find($request->product_id)) 
             return response()->json([
                 'status' => false,
@@ -116,34 +94,33 @@ class FavoriteController extends Controller
     }
 
     public function index(Request $request){
-    	// if(!\Auth::check()) {
-     //        return response()->json([
-     //            'status' => false,
-     //            'data' => [
-     //                'message' => 'Don\'t have permisson'
-     //            ]
-     //        ], 403);
-     //    }
-     //    $user = \Auth::user();
+
         if (!isset($request->user_id)) {
-            return Response::json([
+            return response()->json([
                 'status' => false,
-                'data' => ['message' => 'Not found any user_id or product_id']
+                'data' => ['message' => 'Not found user_id or product_id']
             ]);
         }
 
         $user = App\User::find($request->user_id);
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'Not found user_id or product_id']
+            ]);
+        }
 
-        if(count($user->favorite()->get()) == 0) 
+        if(count($user->favorite) == 0) 
 	        return response()->json([
 	        	'status' => false,
 	        	'data' => ['message' => 'Empty']
 	        ]);
 
 	    $data = array();
-	    foreach (($user->favorite()->get()) as $record) {
+	    foreach (($user->favorite) as $record) {
 	    	$product_id = $record->pivot->product_id;
-	    	array_push($data, App\Products::where('id', $product_id)->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'available_time', 'start_date')));
+            $product = App\Products::where('id', $product_id)->first();
+	    	array_push($data, collect($product)->merge(['stream_link' => NULL]));
 	    }
 
     	return response()->json([

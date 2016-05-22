@@ -11,14 +11,21 @@ use App;
 class RecentController extends Controller
 {
     //
-    public function post(Request $request){
+    public function create(Request $request){
     	if (!isset($request->user_id) || !isset($request->product_id)) {
-    		return Response::json([
+    		return response()->json([
     			'status' => false,
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
         $user = App\User::find($request->user_id);
+
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'User not found']
+            ]);
+        }
         if(!App\Products::find($request->product_id)) 
             return response()->json([
                 'status' => false,
@@ -46,14 +53,19 @@ class RecentController extends Controller
 
     public function delete(Request $request){
     	if (!isset($request->user_id) || !isset($request->product_id)) {
-    		return Response::json([
+    		return response()->json([
     			'status' => false,
     			'data' => ['message' => 'Not found any user_id or product_id']
     		]);
     	}
-
+        
         $user = App\User::find($request->user_id);
-
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'User not found']
+            ]);
+        }
         if(!App\Products::find($request->product_id)) 
             return response()->json([
                 'status' => false,
@@ -81,24 +93,30 @@ class RecentController extends Controller
 
     public function index(Request $request){
         if (!isset($request->user_id)) {
-            return Response::json([
+            return response()->json([
                 'status' => false,
                 'data' => ['message' => 'Not found any user_id or product_id']
             ]);
         }
 
         $user = App\User::find($request->user_id);
-
-        if(count($user->watch_recent()->get()) == 0) 
+        if ($user == NULL) {
+            return response()->json([
+                'status' => false,
+                'data' => ['message' => 'User not found']
+            ]);
+        }
+        if(count($user->watch_recent) == 0) 
 	        return response()->json([
 	        	'status' => false,
 	        	'data' => ['message' => 'Empty']
 	        ]);
 
 	    $data = array();
-	    foreach (($user->watch_recent()->get()) as $record) {
+	    foreach ($user->watch_recent as $record) {
 	    	$product_id = $record->pivot->product_id;
-	    	array_push($data, App\Products::where('id', $product_id)->get(array('id','title', 'video_link', 'product_link', 'image_link', 'channel_id', 'old_price', 'new_price', 'start_time', 'end_time', 'available_time', 'start_date')));
+            $product = App\Products::where('id', $product_id)->first();
+            array_push($data, collect($product)->merge(['stream_link' => NULL]));
 	    }
 
     	return response()->json([

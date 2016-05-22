@@ -583,7 +583,7 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::post('favorite/create', [
 			'as' => 'favorite.create',
-			'uses' => 'Api\v2\FavoriteController@post'
+			'uses' => 'Api\v2\FavoriteController@create'
 		]);
 
 		Route::post('favorite/delete', [
@@ -598,7 +598,7 @@ Route::group(['middleware' => 'web'], function(){
 
 		Route::post('recent/create', [
 			'as' => 'recent.create',
-			'uses' => 'Api\v2\RecentController@post'
+			'uses' => 'Api\v2\RecentController@create'
 		]);
 
 		Route::post('recent/delete', [
