@@ -73,7 +73,10 @@ class CronController extends Controller
 
             $product_detail = ['title' => $title, 'channel_id' => $channel_id];
             $new_product = App\Products::firstOrCreate($product_detail);
-            $new_product->update([ 'video_link' => $video_link, 'image_link' => $image_link, 'product_link' => $product_link, 'old_price' => $old_price, 'new_price' => $new_price, 'auto_link' => $auto_link]);
+            $new_product->update(['image_link' => $image_link, 'product_link' => $product_link, 'old_price' => $old_price, 'new_price' => $new_price, 'auto_link' => $auto_link]);
+            if (empty($new_product->video_link)) {
+                $new_product->update(['video_link' => $video_link]);
+            }
 
             /* For schedule */
             $product_id = $new_product->id;
@@ -85,7 +88,9 @@ class CronController extends Controller
 
             $schedule_detail = ['product_id' => $product_id, 'available_time' => $available_time, 'start_date' => $start_date, 'start_time' => $start_time, 'end_time' => $end_time, 'start_time_string' => $start_time_string, 'end_time_string' => $end_time_string];
             $new_schedule = App\Schedule::firstOrCreate($schedule_detail);
-            $new_schedule->update(['stream_link' => $stream_link]);
+            if (empty($new_schedule->stream_link)) {
+                $new_schedule->update(['stream_link' => $stream_link]);
+            }
 
             $data = ['id' => $new_product->id, 'title' => $title, 'channel_id' => $channel_id, 'image_link' => $image_link, 'video_link' => $video_link, 'product_link' => $product_link, 'description' => $description, 'old_price' => $old_price, 'new_price' => $new_price, 'start_time' => $start_time, 'end_time' => $end_time];
 
