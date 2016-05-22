@@ -91,8 +91,8 @@ Products
                                 <td><img src="{{ empty($product->relative_image_link) ? $product->image_link : asset($product->relative_image_link)}}" alt="{{$product->title}}" height="100px" width="100px"></td>
                                 <td><a href="{{$product->video_link}}" title="{{$product->title}}" target="_blank">{{$product->video_link}}</a></td>
                                 <td class="text-center">
-                                    <a href="{{ route('channel.schedule.create', $product->id) }}" class="btn btn-success btn-circle"
-                                        title="Add schedule for this product" data-toggle="tooltip" data-placement="top">
+                                    <a href="{{ route('channel.schedule.create', $product->id) }}" @if($product->deleted_at != NULL) class="btn btn-danger btn-circle" @else class="btn btn-success btn-circle" @endif
+                                        data-toggle="tooltip" data-placement="top" @if($product->deleted_at != NULL) onclick="return false;" title="Restore before adding schedule" @else title="Add schedule for this product" @endif>
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </a>
                                     <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
