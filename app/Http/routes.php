@@ -596,8 +596,6 @@ Route::group(['middleware' => 'web'], function(){
 
 	        $user->role()->attach(App\Role::findByName('User'));
 
-	        Auth::login($user);
-
             return response()->json([
                 'status' => true,
                 'data' => $user
