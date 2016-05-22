@@ -48,10 +48,12 @@ class ScheduleController extends Controller
         foreach ($schedules as $schedule) {
             $product_id = $schedule->product_id;
             $product = App\Products::withTrashed()->where('id', $product_id)->first();
-            $item_type = $this->item_type($schedule->start_time, $schedule->end_time, $utc_current_time);
-            $item = ['id' => $schedule->product_id, 'title' => $product->title, 'channel_id' => $product->channel_id, 'image_link' => $product->image_link, 'video_link' => $product->video_link, 'product_link' => $product->product_link, 'description' => $product->description, 'old_price' => $product->old_price, 'new_price' => $product->new_price, 'start_time' => $schedule->start_time, 'end_time' => $schedule->end_time, 'stream_link' => $schedule->stream_link, 'item_type' => $item_type];
-            if ($item_type != -1) {
-                array_push($array, $item);
+            if ($product->deleted_at == NULL) {
+                $item_type = $this->item_type($schedule->start_time, $schedule->end_time, $utc_current_time);
+                $item = ['id' => $schedule->product_id, 'title' => $product->title, 'channel_id' => $product->channel_id, 'image_link' => $product->image_link, 'video_link' => $product->video_link, 'product_link' => $product->product_link, 'description' => $product->description, 'old_price' => $product->old_price, 'new_price' => $product->new_price, 'start_time' => $schedule->start_time, 'end_time' => $schedule->end_time, 'stream_link' => $schedule->stream_link, 'item_type' => $item_type];
+                if ($item_type != -1) {
+                    array_push($array, $item);
+                }
             }
         }
 
