@@ -8,3 +8,4 @@ Homestead.json
 /config/database.php
 .htaccess
 /storage/settings.json
+/public/upload
