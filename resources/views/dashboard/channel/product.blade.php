@@ -92,15 +92,15 @@ Products
                                 <td><a href="{{$product->video_link}}" title="{{$product->title}}" target="_blank">{{$product->video_link}}</a></td>
                                 <td class="text-center">
                                     <a href="{{ route('channel.schedule.create', $product->id) }}" @if($product->deleted_at != NULL) class="btn btn-danger btn-circle" @else class="btn btn-success btn-circle" @endif
-                                        data-toggle="tooltip" data-placement="top" @if($product->deleted_at != NULL) onclick="return false;" title="Restore before adding schedule" @else title="Add schedule for this product" @endif>
+                                        data-toggle="tooltip" data-placement="top" @if($product->deleted_at != NULL) onclick="return false;" title="Restore before adding schedule" @else title="Add schedule for this product" @endif target="_blank">
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </a>
                                     <a href="{{ route('channel.product.show', $product->id) }}" class="btn btn-success btn-circle"
-                                        title="Quicklook" data-toggle="tooltip" data-placement="top">
+                                        title="Quicklook" data-toggle="tooltip" data-placement="top" target="_blank">
                                         <i class="glyphicon glyphicon-eye-open"></i>
                                     </a>
                                     <a href="{{ route('channel.product.edit', $product->id) }}" class="btn btn-primary btn-circle edit" title="Edit product"
-                                        data-toggle="tooltip" data-placement="top">
+                                        data-toggle="tooltip" data-placement="top" target="_blank">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
                                     @if($product->deleted_at == NULL)

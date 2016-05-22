@@ -96,7 +96,7 @@ Schedule
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </a>
                                         <a href="{{ route('channel.schedule.edit', $schedule->id) }}" class="btn btn-primary btn-circle edit" title="Edit this schedule"
-                                            data-toggle="tooltip" data-placement="top">
+                                            data-toggle="tooltip" data-placement="top" target="_blank">
                                             <i class="glyphicon glyphicon-edit"></i>
                                         </a>
                                     </td>
