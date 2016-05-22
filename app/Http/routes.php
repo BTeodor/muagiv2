@@ -571,10 +571,38 @@ Route::group(['middleware' => 'web'], function(){
 			'uses' => 'Api\v2\MobileAuthController@postLogin'
 		]);
 
-		Route::post('register', [
-			'as' => 'user.register',
-			'uses' => 'Api\v2\MobileAuthController@postRegister'
-		]);
+		Route::post('register', function(Illuminate\Http\Request $request){
+			if (!$request->has('email') || !$request->has('username') || !$request->has('password')) {
+	            return response()->json([
+	                'status' => false,
+	                'data' => ['message' => "Email, username or password is empty"]
+	            ]);
+			}
+			$status = "Active";
+			$credentials = ['email' => $request->email, 'username' => $request->username, 'password' => bcrypt($request->password), 'status' => $status];
+
+	        try {
+				$id = DB::table('users')->insertGetId($credentials);
+	        } catch (\Illuminate\Database\QueryException $e){
+	            return response()->json([
+	                'status' => false,
+	                'data' => [
+	                    'code' => $e->getCode(),
+	                    'message' => $e->errorInfo[2]
+	                ]
+	            ], 500);
+	        }
+	        $user = App\User::find($id);
+
+	        $user->role()->attach(App\Role::findByName('User'));
+
+	        Auth::login($user);
+
+            return response()->json([
+                'status' => true,
+                'data' => $user
+            ]);
+		});
 
 		Route::post('searchByProductName', [
 			'as' => 'product.search',
