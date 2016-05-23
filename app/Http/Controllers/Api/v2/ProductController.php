@@ -77,7 +77,7 @@ class ProductController extends Controller
     public function compare(Request $request){
         if ($request->has('product_id')) {
             $product_id = $request->only('product_id');
-            $product = Products::where('id', $product_id)->first();
+            $product = Products::withTrashed()->where('id', $product_id)->first();
 
             if ($product == NULL) {
                 return response()->json([
@@ -86,25 +86,47 @@ class ProductController extends Controller
                 ]);
             }
             $keyword_string = $product->json_keyword;
-
-            if ($keyword_string == "") {
-                return response()->json([
-                    'status' => false,
-                    'data' => ['message' => "Product cannot be compared because no keyword found"]
-                ]);
-            }
-
-            $keyword_array = explode(",", $keyword_string);
-
+            $title = $product->title;
             $array = array();
-            foreach ($keyword_array as $keyword) {
-                $products = Products::where('id', '<>', $product_id)->where('json_keyword', 'like', "%{$keyword}%")->orWhere('title', 'like', "%{$keyword}%")->get();
-                if($products->count() > 0) 
-                    foreach ($products as $product) {
-                        $channel_name = $product->channel->name;
-                        $product = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
-                        if(!in_array($product, $array)) array_push($array, $product);
+            $item = collect($product)->merge(['from' => $product->channel->name, 'stream_link' => NULL]);
+            array_push($array, $item);
+
+            if ($keyword_string != "") {
+                $keyword_array = explode(",", $keyword_string);
+                foreach ($keyword_array as $keyword) {
+                    $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->get();
+                    if($products->count() > 0) 
+                        foreach ($products as $product) {
+                            $channel_name = $product->channel->name;
+                            $item = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
+                            if(!in_array($item, $array)) array_push($array, $item);
+                        }
+                }
+
+                foreach ($keyword_array as $keyword) {
+                    $products = Products::where('title', '<>', $title)->where('title', 'like', "%{$keyword}%")->get();
+                    if($products->count() > 0) 
+                        foreach ($products as $product) {
+                            $channel_name = $product->channel->name;
+                            $item = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
+                            if(!in_array($item, $array)) array_push($array, $item);
+                        }
+                }
+            }
+            else {
+                $title_array = preg_split('/\PL+/u', $title, -1, PREG_SPLIT_NO_EMPTY);
+                // return response()->json($title_array);
+                foreach ($title_array as $keyword) {
+                    if (strlen($keyword) >= 4) {
+                        $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->get();
+                        if($products->count() > 0) 
+                            foreach ($products as $product) {
+                                $channel_name = $product->channel->name;
+                                $item = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
+                                if(!in_array($item, $array)) array_push($array, $item);
+                            }
                     }
+                }
             }
 
             if (count($array) == 0) {
