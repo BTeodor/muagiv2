@@ -88,8 +88,8 @@ class ProductController extends Controller
             $keyword_string = $product->json_keyword;
             $title = $product->title;
             $array = array();
-            $item = collect($product)->merge(['from' => $product->channel->name, 'stream_link' => NULL]);
-            array_push($array, $item);
+            // $item = collect($product)->merge(['from' => $product->channel->name, 'stream_link' => NULL]);
+            // array_push($array, $item);
 
             if ($keyword_string != "") {
                 $keyword_array = explode(",", $keyword_string);
