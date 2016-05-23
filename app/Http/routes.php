@@ -598,7 +598,7 @@ Route::group(['middleware' => 'web'], function(){
 
             return response()->json([
                 'status' => true,
-                'data' => $user
+                'data' => ['user' => $user]
             ]);
 		});
 
