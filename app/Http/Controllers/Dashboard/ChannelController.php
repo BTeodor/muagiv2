@@ -490,7 +490,11 @@ class ChannelController extends Controller
         $utc_time_mark = $clock->get_unix_time_UTC_from_GMT_7("00:00", $today);
         $current_time_hh_mm_GMT_7 = $clock->get_current_time_GMT_7("H:i");
         $utc_current_time = $clock->get_current_utc_time();
-        $query_schedule = App\Schedule::query()->where('start_time', '>=', $utc_time_mark);
+        $channel_id = $channel->id;
+        $query_schedule = App\Schedule::query()->whereIn('product_id', function($q) use ($channel_id){
+            $q->select('id')->from('products')->where('channel_id', $channel_id);
+        });
+        $query_schedule->where('start_time', '>=', $utc_time_mark);
         if(Input::get('category')){
             if(Input::get('category') != 1000)
             $query_schedule->whereIn('product_id', function($q){
