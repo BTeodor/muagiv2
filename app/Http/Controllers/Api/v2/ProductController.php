@@ -114,19 +114,19 @@ class ProductController extends Controller
                 }
             }
             else {
-                $title_array = preg_split('/\PL+/u', $title, -1, PREG_SPLIT_NO_EMPTY);
-                // return response()->json($title_array);
-                foreach ($title_array as $keyword) {
-                    if (strlen($keyword) >= 4) {
-                        $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->get();
-                        if($products->count() > 0) 
-                            foreach ($products as $product) {
-                                $channel_name = $product->channel->name;
-                                $item = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
-                                if(!in_array($item, $array)) array_push($array, $item);
-                            }
-                    }
-                }
+                // $title_array = preg_split('/\PL+/u', $title, -1, PREG_SPLIT_NO_EMPTY);
+                // // return response()->json($title_array);
+                // foreach ($title_array as $keyword) {
+                //     if (strlen($keyword) >= 4) {
+                //         $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->get();
+                //         if($products->count() > 0) 
+                //             foreach ($products as $product) {
+                //                 $channel_name = $product->channel->name;
+                //                 $item = collect($product)->merge(['from' => $channel_name, 'stream_link' => NULL]);
+                //                 if(!in_array($item, $array)) array_push($array, $item);
+                //             }
+                //     }
+                // }
             }
 
             if (count($array) == 0) {
