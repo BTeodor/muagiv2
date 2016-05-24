@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function searchByProductName(Request $request){
     	if (isset($request->keyword)) {
     		$keyword = $request->keyword;
-    		$products = Products::where('title', 'like', "%{$keyword}%")->orWhere('description', 'like', "%{$keyword}%")->orWhere('json_keyword', 'like', "%{$keyword}%")->get();
+    		$products = Products::where('title', 'like', "%{$keyword}%")->orWhere('json_keyword', 'like', "%{$keyword}%")->get();
     		if (count($products) > 0) {
                 $array = array();
                 foreach ($products as $product) {
