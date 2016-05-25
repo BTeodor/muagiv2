@@ -28,7 +28,9 @@ class UserController extends Controller
 	public function postLogin(LoginRequest $request){
 
 		$credentials = $this->getCredentials($request);
-
+		if (!Auth::attempt($credentials)) {
+			return redirect()->back()->withErrors('This does not match any credentials');
+		}
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 
 		Auth::login($user);
