@@ -56,14 +56,14 @@ class UserController extends Controller
 		$data = [
 			'username' => $request->username,
 			'email' => $request->email,
-			'password' => bcrypt($request->password),
+			'password' => \Hash::make($request->password),
 			'status' => $status
 		];
 		$user = new App\User($data);
 		$user->save();
 
 		$user->role()->attach(App\Role::findByName('User'));
-		
+		return redirect('auth/login')->withSuccess('Successfully Registered');
 		Auth::login($user);
 		event(new LoggedIn($user));
 
