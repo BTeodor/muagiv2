@@ -30,7 +30,9 @@ class UserController extends Controller
 		$credentials = $this->getCredentials($request);
 
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
-
+		if ($user == NULL) {
+			return redirect()->back()->withErrors('Incorrect login credentials');
+		}
 		Auth::login($user);
 
 		event(new LoggedIn($user));

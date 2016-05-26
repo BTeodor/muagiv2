@@ -1,6 +1,7 @@
 @extends('webuser.app')
 @section('title','Login')
 @section('content')
+@include('partials.messages')
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
