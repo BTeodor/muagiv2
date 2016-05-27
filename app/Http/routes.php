@@ -710,13 +710,6 @@ Route::get('resetpassword', function(){
 	$user2->update(['password' => 'shinichikudo']);
 	$user3 = App\User::where('username', 'duongict')->first();
 	$user3->update(['password' => 'admin123']);
-	echo $user1->getAuthPassword() . "<br>";
-	echo $user2->getAuthPassword() . "<br>";
-	echo $user3->getAuthPassword() . "<br>";
-	echo sha1(md5('shinichikudo')) . "<br>";
-	echo sha1(md5('admin123')) . "<br>";
-	echo sha1(md5('admin123')) . "<br>";
-	$user3 = App\User::where('username', 'gsduong')->first();
-	$user3->fill(['password' => 'alo123'])->save();
-	echo sha1(md5('admin123')) . "<br>";
+	$user4 = App\User::where('username', 'anhnguyen0713')->first();
+	$user4->update(['password' => 'shinichikudo']);
 });
