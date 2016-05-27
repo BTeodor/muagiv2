@@ -77,7 +77,7 @@
                                         none
                                     @endif
                                 </td>
-                                <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $user->created_at }}</td>
                                 <td>
                                     <span class="label label-{{ $user->present()->labelClass }}">{{ trans("app.{$user->status}") }}</span>
                                 </td>

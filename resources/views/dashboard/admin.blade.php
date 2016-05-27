@@ -105,7 +105,7 @@
                     <li>
                         <img src="{{ $user->present()->avatar }}" alt="User Image">
                         <a class="users-list-name" href="{{ route('user.show', $user->id) }}">{{ $user->present()->nameOrEmail }}</a>
-                        <span class="users-list-date">{{ $user->created_at->diffForHumans() }}</span>
+                        <span class="users-list-date">{{ $user->created_at}}</span>
                     </li>
                 @endforeach
                 </ul>

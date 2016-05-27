@@ -13,6 +13,7 @@ use App\Events\User\LoggedIn;
 use App\Events\User\LoggedOut;
 use App\Events\User\Registered;
 use Validator;
+use Carbon\Carbon;
 use App;
 use App\Support\Enum\UserStatus;
 
@@ -34,7 +35,7 @@ class UserController extends Controller
 			return redirect()->back()->withErrors('Incorrect login credentials');
 		}
 		Auth::login($user);
-
+		$user->update(['created_at' => Carbon::now()]);
 		event(new LoggedIn($user));
 
 		return redirect()->intended('/dashboard');
@@ -63,6 +64,7 @@ class UserController extends Controller
 		$user->save();
 
 		$user->role()->attach(App\Role::findByName('User'));
+		$user->update(['created_at' => Carbon::now()]);
 		return redirect('auth/login')->withSuccess('Successfully Registered');
 		Auth::login($user);
 		event(new LoggedIn($user));
