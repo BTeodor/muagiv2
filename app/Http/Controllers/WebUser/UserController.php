@@ -32,10 +32,13 @@ class UserController extends Controller
 
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 		if ($user == NULL) {
-			return redirect()->back()->withErrors('Incorrect login credentials');
+			return redirect()->back()->withErrors('Incorrect username');
+		}
+		if (sha1(md5($request->password)) != $user->password) {
+			return redirect()->back()->withErrors('Incorrect password');
 		}
 		Auth::login($user);
-		$user->update(['created_at' => Carbon::now()]);
+		$user->update(['last_login' => Carbon::now()]);
 		event(new LoggedIn($user));
 
 		return redirect()->intended('/dashboard');
@@ -57,7 +60,7 @@ class UserController extends Controller
 		$data = [
 			'username' => $request->username,
 			'email' => $request->email,
-			'password' => \Hash::make($request->password),
+			'password' => $request->password, // auto encrypt password by setPasswordAttribute in User model
 			'status' => $status
 		];
 		$user = new App\User($data);

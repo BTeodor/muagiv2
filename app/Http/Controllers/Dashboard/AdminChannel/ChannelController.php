@@ -34,11 +34,11 @@ class ChannelController extends Controller
     }
 
     public function edit($id){
-        $channel = App\Channels::find($id);
-        if ($channel == NULL) {
+        $channel_to_edit = App\Channels::find($id);
+        if ($channel_to_edit == NULL) {
             return "Channel not found";
         }
-        return view('dashboard.adminchannel.edit', compact('channel'));
+        return view('dashboard.adminchannel.edit', compact('channel_to_edit'));
     }
 
     public function update(Request $request){

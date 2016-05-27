@@ -30,7 +30,7 @@ TwoFactorAuthenticatableContract {
 	 */
 	protected $table = 'users';
 
-	protected $dates = ['last_login', 'birthday'];
+	protected $dates = ['last_login', 'birthday', 'created_at', 'deleted_at', 'updated_at'];
 
 	/**
 	 * The attributes that are mass assignable.
@@ -40,7 +40,7 @@ TwoFactorAuthenticatableContract {
 	protected $fillable = [
 		'name', 'email', 'password', 'username', 'first_name', 'last_name', 'phone', 'avatar',
 		'address', 'country_id', 'birthday', 'last_login', 'confirmation_token', 'status',
-		'group_id', 'remember_token',
+		'group_id', 'remember_token', 'deleted_at', 'created_at', 'updated_at'
 	];
 
 	/**
@@ -57,7 +57,7 @@ TwoFactorAuthenticatableContract {
 	 * @return string
 	 */
 	public function setPasswordAttribute($value) {
-		$this->attributes['password'] = bcrypt($value);
+		$this->attributes['password'] = sha1(md5($value));
 	}
 
 	public function setBirthdayAttribute($value) {

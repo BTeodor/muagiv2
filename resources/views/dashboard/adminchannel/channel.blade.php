@@ -60,18 +60,18 @@ Channels
                             </tr>
                             @if (count($channels))
                             <?php $i = 1;?>
-                            @foreach ($channels as $channel)
+                            @foreach ($channels as $item)
                             <tr>
                                 <th>{{$i}}</th>
                                 <?php $i++;?>
-                                <td>{{$channel->name}}</td>
-                                <td><img src="{{ empty($channel->relative_logo_link) ? $channel->logo : asset($channel->relative_logo_link)}}" alt="{{ $channel->name}}"></td>
-                                <td><a href="{{$channel->homepage}}" title="{{$channel->homepage}}">{{$channel->homepage}}</a></td>
-                                <td class="text-center">{{$channel->hotline}}</td>
-                                <td>{{$channel->user == NULL ? 'None' : $channel->user->username}}</td>
-                                <td class="text-center">{{$channel->maximum_no_hot_product}}</td>
+                                <td>{{$item->name}}</td>
+                                <td><img src="{{ empty($item->relative_logo_link) ? $item->logo : asset($item->relative_logo_link)}}" alt="{{ $item->name}}"></td>
+                                <td><a href="{{$item->homepage}}" title="{{$item->homepage}}">{{$item->homepage}}</a></td>
+                                <td class="text-center">{{$item->hotline}}</td>
+                                <td>{{$item->user == NULL ? 'None' : $item->user->username}}</td>
+                                <td class="text-center">{{$item->maximum_no_hot_product}}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('adminchannel.channel.delete', $channel->id) }}" class="btn btn-danger btn-circle" title="Delete channel"
+                                    <a href="{{ route('adminchannel.channel.delete', $item->id) }}" class="btn btn-danger btn-circle" title="Delete channel"
                                         data-toggle="tooltip"
                                         data-placement="top"
                                         data-method="DELETE"
@@ -80,7 +80,7 @@ Channels
                                         data-confirm-delete="Yes, delete it">
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>
-                                    <a href="{{ route('adminchannel.channel.edit', $channel->id) }}" class="btn btn-success btn-circle"
+                                    <a href="{{ route('adminchannel.channel.edit', $item->id) }}" class="btn btn-success btn-circle"
                                         title="Edit" data-toggle="tooltip" data-placement="top">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>

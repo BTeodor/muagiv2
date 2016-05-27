@@ -23,14 +23,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type='text' name="name" id='name' class="form-control" required value="{{$channel->name}}" disabled/>
+                <input type='text' name="name" id='name' class="form-control" required value="{{$channel_to_edit->name}}" disabled/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="hotline">Hotline</label>
                 <input type="text" class="form-control" id="hotline"
-                       name="hotline" placeholder="" required value="{{$channel->hotline}}" disabled>
+                       name="hotline" placeholder="" required value="{{$channel_to_edit->hotline}}" disabled>
             </div>
         </div>
     </div>
@@ -38,10 +38,10 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="logo">Logo URL</label><br>
-                <img src="{{ empty($channel->relative_logo_link) ? $channel->logo : asset($channel->relative_logo_link)}}" alt="{{ $channel->name}}">
+                <img src="{{ empty($channel_to_edit->relative_logo_link) ? $channel_to_edit->logo : asset($channel_to_edit->relative_logo_link)}}" alt="{{ $channel_to_edit->name}}">
                 <br>
                 <br>
-                <input type='text' name="logo" id='logo' class="form-control" required value="{{$channel->logo}}" disabled/>
+                <input type='text' name="logo" id='logo' class="form-control" required value="{{$channel_to_edit->logo}}" disabled/>
             </div>
         </div>
     </div>
@@ -50,18 +50,18 @@
             <div class="form-group">
                 <label for="maximum_no_hot_product">Maximum number of top sell positions</label>
                 <input type="text" class="form-control" id="maximum_no_hot_product"
-                       name="maximum_no_hot_product" placeholder="" required value="{{$channel->maximum_no_hot_product}}">
+                       name="maximum_no_hot_product" placeholder="" required value="{{$channel_to_edit->maximum_no_hot_product}}">
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" placeholder="Description goes here" disabled>{{$channel->description}}</textarea>
+                <textarea name="description" class="form-control" id="description" placeholder="Description goes here" disabled>{{$channel_to_edit->description}}</textarea>
             </div>
         </div>
     </div>
     <div class="row">
-        <input type="hidden" name="id" value="{{$channel->id}}"></input>
+        <input type="hidden" name="id" value="{{$channel_to_edit->id}}"></input>
         <div class="col-md-6">
             <button type="submit" class="btn btn-primary" id="create-details-btn">
                 <i class="fa fa-refresh"></i>

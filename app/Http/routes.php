@@ -679,3 +679,44 @@ Route::group(['middleware' => 'web'], function(){
 });
 
 Route::get('product/{id}', 'Api\v2\ProductController@showProduct');
+
+Route::get('test', function(){
+	$user = App\User::where('username', 'duongict')->first();
+	if ($user == NULL) {
+		return NULL;
+	}
+	$user->update(['password' => bcrypt('admin123')]);
+	$password = sha1(md5('admin123'));
+	echo "<br>";
+	echo $password;
+	echo "<br>";
+	$password2 = \Hash::make('admin123');
+	echo "<br>";
+	echo $password2;
+	echo "<br>";
+	echo \Hash::make('admin123');
+	echo "<br>";
+	echo \Hash::make('admin123');
+	echo "<br>";
+	echo "user password: ".$user->password;
+	echo "<br>";
+	return json_encode(['status' => $password == sha1(md5('admin123')), 'status2' => crypt('admin123', $user->password) == $user->password]);
+});
+
+Route::get('resetpassword', function(){
+	$user1 = App\User::where('username', 'admin')->first();
+	$user1->update(['password' => 'admin123']);
+	$user2 = App\User::where('username', 'hoanganh')->first();
+	$user2->update(['password' => 'shinichikudo']);
+	$user3 = App\User::where('username', 'duongict')->first();
+	$user3->update(['password' => 'admin123']);
+	echo $user1->getAuthPassword() . "<br>";
+	echo $user2->getAuthPassword() . "<br>";
+	echo $user3->getAuthPassword() . "<br>";
+	echo sha1(md5('shinichikudo')) . "<br>";
+	echo sha1(md5('admin123')) . "<br>";
+	echo sha1(md5('admin123')) . "<br>";
+	$user3 = App\User::where('username', 'gsduong')->first();
+	$user3->fill(['password' => 'alo123'])->save();
+	echo sha1(md5('admin123')) . "<br>";
+});
