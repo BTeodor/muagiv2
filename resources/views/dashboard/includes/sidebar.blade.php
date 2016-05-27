@@ -9,7 +9,7 @@
                 <img src="{{ Auth::user()->present()->avatar }}" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->present()->nameOrEmail }}</p>
+                <p>{{ Auth::user()->username }}</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> @lang('app.online')</a>
             </div>
