@@ -61,11 +61,7 @@ Route::group(['middleware' => 'web'], function () {
 			]);
 
 			Route::group(['prefix' => 'channel'], function() {
-				Route::get('test', function(){
-					$user = \Auth::user();
-					// $channel = $user->channel()->get()->toArray() [0];
-					var_dump(json_encode($user->channel()));//->first()));
-				});
+
 				Route::get('index', ['as' => 'channel.index', 'uses' => 'ChannelController@index']);
 
 				Route::put('details/update', [
@@ -517,42 +513,9 @@ Route::get('/', ['as' => '/', function(){
 }]);
 
 Route::group(['prefix' => 'api/v1'], function(){
-	Route::get('products', function (){
-		$clock = new App\ExternalClasses\MyClock();
-		$today = $clock->get_today_date_GMT_7("Y-m-d");
-		return Response::json(App\Products::where('start_date', $today)->get());
-
-	});
 
 	Route::get('channels', function(){
 		return Response::json(App\Channels::all());
-	});
-
-	Route::get('broadcast', function(){
-		$clock = new App\ExternalClasses\MyClock();
-		$today = $clock->get_today_date_GMT_7("Y-m-d");
-		$current_time_hh_mm_GMT_7 = $clock->get_current_time_GMT_7("H:i");
-		$current_unix_time_UTC = $clock->get_unix_time_UTC_from_GMT_7($current_time_hh_mm_GMT_7, $today);
-		// $pattern = $today.'%';
-		$products = App\Products::where('start_date', $today)->orderBy('start_time', 'asc')->get();
-		$array = array();
-
-		function item_type($start_time, $end_time, $current_time){
-			if ($current_time < $start_time) {
-				return 1;
-			}
-			elseif ($current_time >= $start_time && $current_time <= $end_time) {
-				return 0;
-			}
-			else return -1;
-		}
-		foreach ($products as $product) {
-			if (($item_type = item_type($product->start_time, $product->end_time, $current_unix_time_UTC)) != -1) {
-				array_push($array, new App\ExternalClasses\NoDesItem($product, $item_type));
-			}
-		}
-
-		return Response::json($array);
 	});
 
 	Route::get('product/detail/{id}/', function($id){
@@ -679,37 +642,3 @@ Route::group(['middleware' => 'web'], function(){
 });
 
 Route::get('product/{id}', 'Api\v2\ProductController@showProduct');
-
-Route::get('test', function(){
-	$user = App\User::where('username', 'duongict')->first();
-	if ($user == NULL) {
-		return NULL;
-	}
-	$user->update(['password' => bcrypt('admin123')]);
-	$password = sha1(md5('admin123'));
-	echo "<br>";
-	echo $password;
-	echo "<br>";
-	$password2 = \Hash::make('admin123');
-	echo "<br>";
-	echo $password2;
-	echo "<br>";
-	echo \Hash::make('admin123');
-	echo "<br>";
-	echo \Hash::make('admin123');
-	echo "<br>";
-	echo "user password: ".$user->password;
-	echo "<br>";
-	return json_encode(['status' => $password == sha1(md5('admin123')), 'status2' => crypt('admin123', $user->password) == $user->password]);
-});
-
-Route::get('resetpassword', function(){
-	$user1 = App\User::where('username', 'admin')->first();
-	$user1->update(['password' => 'admin123']);
-	$user2 = App\User::where('username', 'hoanganh')->first();
-	$user2->update(['password' => 'shinichikudo']);
-	$user3 = App\User::where('username', 'duongict')->first();
-	$user3->update(['password' => 'admin123']);
-	$user4 = App\User::where('username', 'anhnguyen0713')->first();
-	$user4->update(['password' => 'shinichikudo']);
-});

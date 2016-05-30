@@ -32,7 +32,7 @@ class UserController extends Controller
 
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 		if ($user == NULL) {
-			return redirect()->back()->withErrors('Incorrect username');
+			return redirect()->back()->withErrors('Incorrect username or email');
 		}
 		if (sha1(md5($request->password)) != $user->password) {
 			return redirect()->back()->withErrors('Incorrect password');
