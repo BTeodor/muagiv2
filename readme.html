@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Installation instruction</title>
+	<link rel="stylesheet" type="text/css" href="public/assets/css/bootstrap.css">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">
+			<h2>Requirements:</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<ul class="list-group">
+			  <li class="list-group-item"><span class="badge">1</span> Local host server supports php5.6+</li>
+			  <li class="list-group-item"><span class="badge">2</span> Local mysql database</li> 
+			  <li class="list-group-item"><span class="badge">3</span> <a href="https://getcomposer.org/" title="Composer" target="_blank">Composer</a> installed globally local</li> 
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<p><a href="https://www.apachefriends.org/index.html" title="Recommendation" target="_blank">Recommendation</a></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<h2>Installation guides:</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<ul class="list-group">
+			  <li class="list-group-item"><span class="badge">1</span> <a href="database.html" title="Config database">Config database</a></li>
+			  <li class="list-group-item"><span class="badge">2</span> In the root directory of project, run<code>composer install</code> (Ubuntu) or <code>php composer.phar install</code> (Windows)</li>
+			  <li class="list-group-item"><span class="badge">3</span> Run <code>php artisan serve --port=8080</code> to make server to run at <code>localhost:8080</code></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+</html>
