@@ -203,7 +203,7 @@ class ChannelController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', "like", "%{$search}%");
-                $q->orWhere('description', 'like', "%{$search}%");
+                //$q->orWhere('description', 'like', "%{$search}%");
                 $q->orWhere('json_keyword', 'like', "%{$search}%");
             });
         }
