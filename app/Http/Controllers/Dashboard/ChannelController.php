@@ -504,7 +504,7 @@ class ChannelController extends Controller
         $search = Input::get('search');
         if (Input::get('search')) {
             $query_schedule->whereIn('product_id', function($q) use ($search){
-                $q->select('id')->from('products')->where('title', "like", "%{$search}%")->orWhere('description', 'like', "%{$search}%")->orWhere('json_keyword', 'like', "%{$search}%");
+                $q->select('id')->from('products')->where('title', "like", "%{$search}%")->orWhere('json_keyword', 'like', "%{$search}%");
             });
         }
         $schedules = $query_schedule->orderBy('start_time', 'asc')->paginate($perPage);
