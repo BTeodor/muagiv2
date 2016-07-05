@@ -94,7 +94,7 @@ class ProductController extends Controller
             if ($keyword_string != "") {
                 $keyword_array = explode(",", $keyword_string);
                 foreach ($keyword_array as $keyword) {
-                    $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->get();
+                    $products = Products::where('title', '<>', $title)->where('json_keyword', 'like', "%{$keyword}%")->orderBy('new_price','asc')->get();
                     if($products->count() > 0) 
                         foreach ($products as $product) {
                             $channel_name = $product->channel->name;
